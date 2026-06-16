@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="LabAdmin.Client/LabAdmin.Client.csproj" />
+  <Project Path="LabAdmin.Server/LabAdmin.Server.csproj" />
+  <Project Path="LabAdmin.Shared/LabAdmin.Shared.csproj" />
+</Solution>
