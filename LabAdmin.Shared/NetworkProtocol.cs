@@ -16,7 +16,6 @@ namespace LabAdmin.Shared
         public const string CMD_MSG = "CMD_MSG";
         public const string CMD_PULL = "CMD_PULL";
         public const string CMD_CAPTURE = "CMD_CAPTURE";
-
         // Các lệnh từ Client phản hồi lên Server
         public const string REP_SCAN_ACK = "REP_SCAN_ACK";
     }
