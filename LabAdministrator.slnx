@@ -1,5 +1,5 @@
 <Solution>
-  <Project Path="LabAdmin.Client/LabAdmin.Client.csproj" />
-  <Project Path="LabAdmin.Server/LabAdmin.Server.csproj" />
-  <Project Path="LabAdmin.Shared/LabAdmin.Shared.csproj" />
+  <Project Path="LabAdmin.Client/LabAdmin.Client.csproj" Id="9382ac10-5dae-42dc-8405-eaa61a4d72ef" />
+  <Project Path="LabAdmin.Server/LabAdmin.Server.csproj" Id="d8162bb0-b793-49eb-aad3-b3e214eef372" />
+  <Project Path="LabAdmin.Shared/LabAdmin.Shared.csproj" Id="4c666dfe-a1e7-4a26-9b50-afb619526623" />
 </Solution>
