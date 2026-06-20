@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace LabAdmin.Client
 {
-    public partial class Form1 : Form
+    public partial class frmClientMain : Form
     {
-        public Form1()
+        public frmClientMain()
         {
             InitializeComponent();
         }
