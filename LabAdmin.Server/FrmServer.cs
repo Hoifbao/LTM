@@ -18,26 +18,33 @@ namespace LabAdmin.Server
     {
         // Lưu danh sách các máy đã kết nối (Dùng IP làm key, Socket làm value để dễ tìm)
         private Dictionary<string, Socket> clientList = new Dictionary<string, Socket>();
-
         // Tách thread riêng cho mạng để form không bị lag/treo
         private Thread udpThread;
         private Thread tcpThread;
-
+        private string SaveFolderPath = "";
         public frmServerMain()
         {
             InitializeComponent();
-
             // Khởi chạy thread lắng nghe phản hồi UDP
             udpThread = new Thread(ListenUDP);
             udpThread.IsBackground = true; // Set background để tự kill khi tắt form
             udpThread.Start();
-
             // Khởi chạy thread lắng nghe kết nối TCP
             tcpThread = new Thread(ListenTCP);
             tcpThread.IsBackground = true;
             tcpThread.Start();
         }
-
+        private void frmServerMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Hệ thống đang chạy. Bạn có chắc chắn muốn tắt Server và ngắt kết nối toàn bộ máy trạm?",
+                                                  "Cảnh báo an toàn",
+                                                  MessageBoxButtons.YesNo,
+                                                  MessageBoxIcon.Warning);
+            if (result == DialogResult.No)
+            {
+                e.Cancel = true; // Hủy lệnh đóng Form
+            }
+        }
         // Hàm update data lên grid (dùng Invoke để fix lỗi cross-thread khi gọi từ thread mạng)
         public void AddOrUpdateClient(string ip, string machineName, string status)
         {
@@ -47,7 +54,6 @@ namespace LabAdmin.Server
                 this.Invoke(new Action<string, string, string>(AddOrUpdateClient), ip, machineName, status);
                 return;
             }
-
             // Duyệt xem IP đã tồn tại trong grid chưa
             foreach (DataGridViewRow row in dgvClients.Rows)
             {
@@ -58,25 +64,20 @@ namespace LabAdmin.Server
                     return;
                 }
             }
-
             // Chưa có thì add thêm dòng mới
             dgvClients.Rows.Add(ip, machineName, status);
         }
-
         private void btnScan_Click(object sender, EventArgs e)
         {
             try
             {
                 // Clear grid trước khi quét lại
                 dgvClients.Rows.Clear();
-
                 // Dùng UDP để broadcast gọi các máy con
                 Socket sckUdp = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
                 sckUdp.EnableBroadcast = true;
-
                 // Chuẩn bị gói tin lệnh CMD_SCAN
                 byte[] sendData = Encoding.UTF8.GetBytes(NetworkProtocol.CMD_SCAN);
-
                 // Bắn broadcast tới toàn mạng LAN ở port 8888
                 IPEndPoint ep = new IPEndPoint(IPAddress.Broadcast, 8888);
                 sckUdp.SendTo(sendData, ep);
@@ -89,7 +90,6 @@ namespace LabAdmin.Server
                 MessageBox.Show("Lỗi khi phát sóng UDP: " + ex.Message);
             }
         }
-
         private void ListenUDP()
         {
             Socket sckUdp = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
@@ -97,17 +97,14 @@ namespace LabAdmin.Server
             sckUdp.Bind(new IPEndPoint(IPAddress.Any, 8889));
             byte[] buffer = new byte[1024];
             EndPoint remoteEp = new IPEndPoint(IPAddress.Any, 0);
-
             while (true)
             {
                 try
                 {
                     int size = sckUdp.ReceiveFrom(buffer, ref remoteEp);
                     string data = Encoding.UTF8.GetString(buffer, 0, size);
-
                     // Cắt chuỗi để lấy data theo ký tự phân cách
                     string[] parts = data.Split(NetworkProtocol.DELIMITER);
-
                     // Nếu đúng mã phản hồi thì update lên grid
                     if (parts[0] == NetworkProtocol.REP_SCAN_ACK)
                     {
@@ -119,18 +116,14 @@ namespace LabAdmin.Server
                 catch { }
             }
         }
-
         private void ListenTCP()
         {
             Socket sckTcp = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
             // Bật cờ reuse để chống lỗi kẹt cổng 
             sckTcp.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-
             // TCP chạy cổng 9090 để không đụng UDP
             sckTcp.Bind(new IPEndPoint(IPAddress.Any, 9090));
             sckTcp.Listen(100);
-
             while (true)
             {
                 try
@@ -147,9 +140,7 @@ namespace LabAdmin.Server
                     {
                         clientList[ip] = clientSocket;
                     }
-
                     AddOrUpdateClient(ip, "Đã kết nối TCP", "Connected");
-
                     // Cấp riêng 1 thread cho mỗi client để hứng data liên tục
                     Thread receiveThread = new Thread(() => ReceiveData(clientSocket, ip));
                     receiveThread.IsBackground = true;
@@ -158,7 +149,6 @@ namespace LabAdmin.Server
                 catch { }
             }
         }
-
         private void ReceiveData(Socket client, string ip)
         {
             // Cấp buffer 5MB để hứng đủ các file/ảnh có dung lượng lớn
@@ -170,7 +160,6 @@ namespace LabAdmin.Server
                 {
                     int size = client.Receive(buffer);
                     if (size == 0) break; // Client đứt kết nối thì out
-
                     // Nếu data lớn > 1000 byte thì xác định là file zip hoặc file ảnh
                     if (size > 1000)
                     {
@@ -178,23 +167,22 @@ namespace LabAdmin.Server
                         if (buffer[0] == 0x50 && buffer[1] == 0x4B)
                         {
                             // ----- XỬ LÝ NHẬN BÀI THI (FILE ZIP) -----
-                            string folderPath = System.IO.Path.Combine(Application.StartupPath, "ThuBai", ip);
+                            // Nếu giáo viên chưa chọn thư mục, mặc định lưu vào thư mục "ThuBai" của phần mềm
+                            string baseFolder = string.IsNullOrEmpty(SaveFolderPath) ? System.IO.Path.Combine(Application.StartupPath, "ThuBai") : SaveFolderPath;
+                            // Tạo thư mục riêng cho từng IP sinh viên
+                            string folderPath = System.IO.Path.Combine(baseFolder, ip);
                             if (!System.IO.Directory.Exists(folderPath))
                             {
                                 System.IO.Directory.CreateDirectory(folderPath);
                             }
-
                             // Gắn thời gian vào tên file để tránh ghi đè
                             string filePath = System.IO.Path.Combine(folderPath, "BaiLam_" + DateTime.Now.ToString("HHmmss") + ".zip");
-
                             // Cắt đúng mảng byte thực tế nhận được rồi lưu xuống ổ
                             byte[] fileData = new byte[size];
                             Array.Copy(buffer, fileData, size);
                             System.IO.File.WriteAllBytes(filePath, fileData);
-
-                            this.Invoke(new Action(() => {
-                                MessageBox.Show("Đã thu bài thành công từ máy: " + ip, "Thu bài hoàn tất", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }));
+                            // Dùng LogToConsole thay vì MessageBox để không bị vướng màn hình
+                            LogToConsole($"Đã thu bài thành công từ máy: {ip}");
                         }
                         else
                         {
@@ -202,9 +190,7 @@ namespace LabAdmin.Server
                             string folderPath = System.IO.Path.Combine(Application.StartupPath, "AnhChup", ip);
                             if (!System.IO.Directory.Exists(folderPath))
                                 System.IO.Directory.CreateDirectory(folderPath);
-
                             string imgPath = System.IO.Path.Combine(folderPath, "Screen_" + DateTime.Now.ToString("HHmmss") + ".jpg");
-
                             byte[] imageData = new byte[size];
                             Array.Copy(buffer, imageData, size);
                             System.IO.File.WriteAllBytes(imgPath, imageData);
@@ -228,7 +214,6 @@ namespace LabAdmin.Server
                 }
             }
         }
-
         // Lấy IP từ dòng đang được chọn trên DataGridView
         private string GetSelectedIP()
         {
@@ -238,11 +223,9 @@ namespace LabAdmin.Server
             }
             return null;
         }
-
         private void btnLock_Click(object sender, EventArgs e)
         {
             string targetIP = GetSelectedIP();
-
             // Check xem đã chọn máy và client còn sống trong list không
             if (targetIP != null && clientList.ContainsKey(targetIP))
             {
@@ -253,7 +236,6 @@ namespace LabAdmin.Server
                     // Đóng gói và bắn lệnh LOCK
                     byte[] data = Encoding.UTF8.GetBytes(NetworkProtocol.CMD_LOCK);
                     client.Send(data);
-
                     MessageBox.Show("Đã gửi lệnh KHÓA tới máy: " + targetIP, "Thành công");
                 }
                 catch (Exception ex)
@@ -266,18 +248,15 @@ namespace LabAdmin.Server
                 MessageBox.Show("Vui lòng chọn một máy tính đã kết nối TCP trên bảng!", "Chú ý");
             }
         }
-
         private void btnMsg_Click(object sender, EventArgs e)
         {
             string targetIP = GetSelectedIP();
-
             // Bắt lỗi rỗng
             if (string.IsNullOrWhiteSpace(txtMessage.Text))
             {
                 MessageBox.Show("Vui lòng nhập nội dung cần thông báo!", "Chú ý");
                 return;
             }
-
             if (targetIP != null && clientList.ContainsKey(targetIP))
             {
                 try
@@ -303,44 +282,49 @@ namespace LabAdmin.Server
                 MessageBox.Show("Vui lòng chọn một máy tính đã kết nối TCP trên bảng!", "Chú ý");
             }
         }
-
         private void btnPull_Click(object sender, EventArgs e)
         {
             string targetIP = GetSelectedIP();
-
             if (targetIP != null && clientList.ContainsKey(targetIP))
             {
-                try
+                // Ứng dụng Bài 21: Bật hộp thoại chọn thư mục lưu bài
+                using (FolderBrowserDialog fbd = new FolderBrowserDialog())
                 {
-                    Socket client = clientList[targetIP];
+                    fbd.Description = "Chọn thư mục để lưu bài thi của sinh viên:";
+                    if (fbd.ShowDialog() == DialogResult.OK)
+                    {
+                        // Lưu tạm đường dẫn mà giáo viên vừa chọn vào một biến toàn cục
+                        // (Bạn cần khai báo biến string SaveFolderPath ở đầu class)
+                        SaveFolderPath = fbd.SelectedPath;
+                        // Gửi lệnh thu bài đi
+                        Socket client = clientList[targetIP];
+                        byte[] data = Encoding.UTF8.GetBytes(NetworkProtocol.CMD_PULL);
+                        client.Send(data);
 
-                    // Bắn lệnh yêu cầu client nén và nộp bài
-                    byte[] data = Encoding.UTF8.GetBytes(NetworkProtocol.CMD_PULL);
-                    client.Send(data);
-
-                    MessageBox.Show("Đã phát lệnh THU BÀI tới máy: " + targetIP + ".\nĐang chờ máy con nén và gửi file...", "Thành công");
+                        LogToConsole($"Đã phát lệnh THU BÀI tới máy {targetIP}. Sẽ lưu tại: {SaveFolderPath}");
+                    }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Lỗi khi gửi lệnh thu bài: " + ex.Message, "Lỗi");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Vui lòng chọn một máy tính đã kết nối TCP trên bảng!", "Chú ý");
             }
         }
-
+        // Hàm hỗ trợ ghi log có màu sắc
+        private void LogToConsole(string message)
+        {
+            if (lstLogs.InvokeRequired)
+            {
+                lstLogs.Invoke(new Action<string>(LogToConsole), message);
+                return;
+            }
+            lstLogs.Items.Add($"[{DateTime.Now:HH:mm:ss}] {message}");
+            lstLogs.TopIndex = lstLogs.Items.Count - 1; // Tự động cuộn xuống dòng mới nhất
+        }
         private void btnCapture_Click(object sender, EventArgs e)
         {
             string targetIP = GetSelectedIP();
-
             if (targetIP != null && clientList.ContainsKey(targetIP))
             {
                 try
                 {
                     Socket client = clientList[targetIP];
-
                     // Bắn lệnh kích hoạt chụp lén
                     byte[] data = Encoding.UTF8.GetBytes(NetworkProtocol.CMD_CAPTURE);
                     client.Send(data);
@@ -362,7 +346,6 @@ namespace LabAdmin.Server
         private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e) { }
         private void dgvClients_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
         private void Form2_Load(object sender, EventArgs e) { }
-
         private void txtMessage_TextChanged(object sender, EventArgs e)
         {
 
