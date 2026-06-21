@@ -51,7 +51,7 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.picViewer);
             this.Name = "FrmImageViewer";
-            this.Text = "Form3";
+            this.Text = "Image";
             this.Load += new System.EventHandler(this.FrmImageViewer_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picViewer)).EndInit();
             this.ResumeLayout(false);

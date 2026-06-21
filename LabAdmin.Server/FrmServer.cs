@@ -362,5 +362,20 @@ namespace LabAdmin.Server
         private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e) { }
         private void dgvClients_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
         private void Form2_Load(object sender, EventArgs e) { }
+
+        private void txtMessage_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnMsg_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lstLogs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
