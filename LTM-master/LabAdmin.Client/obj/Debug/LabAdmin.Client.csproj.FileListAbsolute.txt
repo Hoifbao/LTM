@@ -1,0 +1,14 @@
+D:\CodeTam\LTM-master\LabAdmin.Client\obj\Debug\LabAdmin.Client.csproj.AssemblyReference.cache
+D:\CodeTam\LTM-master\LabAdmin.Client\obj\Debug\LabAdmin.Client.frmClientMain.resources
+D:\CodeTam\LTM-master\LabAdmin.Client\obj\Debug\LabAdmin.Client.FrmScreenLocker.resources
+D:\CodeTam\LTM-master\LabAdmin.Client\obj\Debug\LabAdmin.Client.Properties.Resources.resources
+D:\CodeTam\LTM-master\LabAdmin.Client\obj\Debug\LabAdmin.Client.csproj.GenerateResource.cache
+D:\CodeTam\LTM-master\LabAdmin.Client\obj\Debug\LabAdmin.Client.csproj.CoreCompileInputs.cache
+D:\CodeTam\LTM-master\LabAdmin.Client\bin\Debug\LabAdmin.Client.exe.config
+D:\CodeTam\LTM-master\LabAdmin.Client\bin\Debug\LabAdmin.Client.exe
+D:\CodeTam\LTM-master\LabAdmin.Client\bin\Debug\LabAdmin.Client.pdb
+D:\CodeTam\LTM-master\LabAdmin.Client\bin\Debug\LabAdmin.Shared.dll
+D:\CodeTam\LTM-master\LabAdmin.Client\bin\Debug\LabAdmin.Shared.pdb
+D:\CodeTam\LTM-master\LabAdmin.Client\obj\Debug\LabAdmin.565B33EF.Up2Date
+D:\CodeTam\LTM-master\LabAdmin.Client\obj\Debug\LabAdmin.Client.exe
+D:\CodeTam\LTM-master\LabAdmin.Client\obj\Debug\LabAdmin.Client.pdb

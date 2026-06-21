@@ -1,0 +1,6 @@
+D:\CodeTam\LTM-master\LabAdmin.Shared\bin\Debug\LabAdmin.Shared.dll
+D:\CodeTam\LTM-master\LabAdmin.Shared\bin\Debug\LabAdmin.Shared.pdb
+D:\CodeTam\LTM-master\LabAdmin.Shared\obj\Debug\LabAdmin.Shared.csproj.AssemblyReference.cache
+D:\CodeTam\LTM-master\LabAdmin.Shared\obj\Debug\LabAdmin.Shared.csproj.CoreCompileInputs.cache
+D:\CodeTam\LTM-master\LabAdmin.Shared\obj\Debug\LabAdmin.Shared.dll
+D:\CodeTam\LTM-master\LabAdmin.Shared\obj\Debug\LabAdmin.Shared.pdb
