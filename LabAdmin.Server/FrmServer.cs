@@ -351,11 +351,6 @@ namespace LabAdmin.Server
 
         }
 
-        private void btnMsg_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
         private void lstLogs_SelectedIndexChanged(object sender, EventArgs e)
         {
 
