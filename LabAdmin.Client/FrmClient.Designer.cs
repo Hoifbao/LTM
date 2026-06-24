@@ -20,6 +20,8 @@
             base.Dispose(disposing);
         }
 
+        //  Bao dined by the Windows Form Designer
+
         #region Windows Form Designer generated code
 
         /// <summary>
