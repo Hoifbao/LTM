@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dgvClients = new System.Windows.Forms.DataGridView();
@@ -72,16 +72,17 @@
             this.splitContainer1.Panel2.Controls.Add(this.panel1);
             this.splitContainer1.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel2_Paint);
             this.splitContainer1.Size = new System.Drawing.Size(994, 450);
-            this.splitContainer1.SplitterDistance = 517;
+            this.splitContainer1.SplitterDistance = 464;
             this.splitContainer1.TabIndex = 0;
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.dgvClients);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(0, 3);
+            this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(514, 444);
+            this.groupBox1.Size = new System.Drawing.Size(464, 450);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = " Danh sách máy trạm đang kết nối";
@@ -93,28 +94,28 @@
             this.dgvClients.BackgroundColor = System.Drawing.Color.White;
             this.dgvClients.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvClients.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle15.BackColor = System.Drawing.Color.DodgerBlue;
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle15.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvClients.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.DodgerBlue;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvClients.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvClients.ColumnHeadersHeight = 40;
             this.dgvClients.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvClients.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2,
             this.Column3});
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvClients.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvClients.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvClients.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvClients.EnableHeadersVisualStyles = false;
             this.dgvClients.Location = new System.Drawing.Point(3, 21);
@@ -124,7 +125,7 @@
             this.dgvClients.RowHeadersWidth = 51;
             this.dgvClients.RowTemplate.Height = 35;
             this.dgvClients.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvClients.Size = new System.Drawing.Size(508, 420);
+            this.dgvClients.Size = new System.Drawing.Size(458, 426);
             this.dgvClients.TabIndex = 1;
             // 
             // Column1
@@ -162,17 +163,19 @@
             this.panel1.Controls.Add(this.btnPull);
             this.panel1.Controls.Add(this.btnLock);
             this.panel1.Controls.Add(this.btnScan);
-            this.panel1.Location = new System.Drawing.Point(3, 12);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(467, 432);
+            this.panel1.Size = new System.Drawing.Size(526, 450);
             this.panel1.TabIndex = 10;
             // 
             // label3
             // 
+            this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.label3.Location = new System.Drawing.Point(134, 11);
+            this.label3.Location = new System.Drawing.Point(184, 20);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(172, 25);
             this.label3.TabIndex = 19;
@@ -180,9 +183,10 @@
             // 
             // label2
             // 
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(4, 370);
+            this.label2.Location = new System.Drawing.Point(54, 379);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(146, 16);
             this.label2.TabIndex = 18;
@@ -190,9 +194,10 @@
             // 
             // label1
             // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(49, 172);
+            this.label1.Location = new System.Drawing.Point(99, 181);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(136, 16);
             this.label1.TabIndex = 17;
@@ -200,15 +205,13 @@
             // 
             // lstLogs
             // 
-            this.lstLogs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lstLogs.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lstLogs.BackColor = System.Drawing.Color.Black;
             this.lstLogs.Font = new System.Drawing.Font("Consolas", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstLogs.ForeColor = System.Drawing.Color.Lime;
             this.lstLogs.FormattingEnabled = true;
             this.lstLogs.ItemHeight = 20;
-            this.lstLogs.Location = new System.Drawing.Point(52, 191);
+            this.lstLogs.Location = new System.Drawing.Point(102, 200);
             this.lstLogs.Name = "lstLogs";
             this.lstLogs.Size = new System.Drawing.Size(356, 144);
             this.lstLogs.TabIndex = 16;
@@ -216,12 +219,13 @@
             // 
             // btnCapture
             // 
+            this.btnCapture.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnCapture.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.btnCapture.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCapture.FlatAppearance.BorderSize = 0;
             this.btnCapture.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCapture.ForeColor = System.Drawing.Color.White;
-            this.btnCapture.Location = new System.Drawing.Point(238, 105);
+            this.btnCapture.Location = new System.Drawing.Point(288, 114);
             this.btnCapture.Name = "btnCapture";
             this.btnCapture.Size = new System.Drawing.Size(135, 53);
             this.btnCapture.TabIndex = 15;
@@ -230,12 +234,13 @@
             // 
             // btnMsg
             // 
+            this.btnMsg.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnMsg.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.btnMsg.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnMsg.FlatAppearance.BorderSize = 0;
             this.btnMsg.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMsg.ForeColor = System.Drawing.Color.White;
-            this.btnMsg.Location = new System.Drawing.Point(357, 383);
+            this.btnMsg.Location = new System.Drawing.Point(407, 392);
             this.btnMsg.Name = "btnMsg";
             this.btnMsg.Size = new System.Drawing.Size(87, 32);
             this.btnMsg.TabIndex = 14;
@@ -245,7 +250,8 @@
             // 
             // txtMessage
             // 
-            this.txtMessage.Location = new System.Drawing.Point(7, 389);
+            this.txtMessage.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txtMessage.Location = new System.Drawing.Point(57, 398);
             this.txtMessage.Name = "txtMessage";
             this.txtMessage.Size = new System.Drawing.Size(344, 22);
             this.txtMessage.TabIndex = 13;
@@ -253,12 +259,13 @@
             // 
             // btnPull
             // 
+            this.btnPull.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnPull.BackColor = System.Drawing.Color.Lime;
             this.btnPull.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnPull.FlatAppearance.BorderSize = 0;
             this.btnPull.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnPull.ForeColor = System.Drawing.Color.White;
-            this.btnPull.Location = new System.Drawing.Point(70, 105);
+            this.btnPull.Location = new System.Drawing.Point(120, 114);
             this.btnPull.Name = "btnPull";
             this.btnPull.Size = new System.Drawing.Size(135, 53);
             this.btnPull.TabIndex = 12;
@@ -267,12 +274,13 @@
             // 
             // btnLock
             // 
+            this.btnLock.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnLock.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.btnLock.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnLock.FlatAppearance.BorderSize = 0;
             this.btnLock.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLock.ForeColor = System.Drawing.Color.White;
-            this.btnLock.Location = new System.Drawing.Point(238, 46);
+            this.btnLock.Location = new System.Drawing.Point(288, 55);
             this.btnLock.Name = "btnLock";
             this.btnLock.Size = new System.Drawing.Size(135, 53);
             this.btnLock.TabIndex = 11;
@@ -281,12 +289,13 @@
             // 
             // btnScan
             // 
+            this.btnScan.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnScan.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.btnScan.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnScan.FlatAppearance.BorderSize = 0;
             this.btnScan.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnScan.ForeColor = System.Drawing.Color.White;
-            this.btnScan.Location = new System.Drawing.Point(70, 46);
+            this.btnScan.Location = new System.Drawing.Point(120, 55);
             this.btnScan.Name = "btnScan";
             this.btnScan.Size = new System.Drawing.Size(135, 53);
             this.btnScan.TabIndex = 10;
