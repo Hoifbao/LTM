@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9382AC10-5DAE-42DC-8405-EAA61A4D72EF}</ProjectGuid>
+    <ProjectGuid>{D8162BB0-B793-49EB-AAD3-B3E214EEF372}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>LabAdmin.Client</RootNamespace>
-    <AssemblyName>LabAdmin.Client</AssemblyName>
+    <RootNamespace>LabAdmin.Server</RootNamespace>
+    <AssemblyName>LabAdmin.Server</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -33,10 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-	<Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System">
-      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll</HintPath>
-    </Reference>
+    <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -49,25 +46,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FrmClient.cs">
+    <Compile Include="FrmImageViewer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmClient.Designer.cs">
-      <DependentUpon>FrmClient.cs</DependentUpon>
+    <Compile Include="FrmImageViewer.Designer.cs">
+      <DependentUpon>FrmImageViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmScreenLocker.cs">
+    <Compile Include="FrmServer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmScreenLocker.Designer.cs">
-      <DependentUpon>FrmScreenLocker.cs</DependentUpon>
+    <Compile Include="FrmServer.Designer.cs">
+      <DependentUpon>FrmServer.cs</DependentUpon>
     </Compile>
-    <Compile Include="ProgramClient.cs" />
+    <Compile Include="ProgramServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FrmClient.resx">
-      <DependentUpon>FrmClient.cs</DependentUpon>
+    <EmbeddedResource Include="FrmImageViewer.resx">
+      <DependentUpon>FrmImageViewer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmScreenLocker.resx">
-      <DependentUpon>FrmScreenLocker.cs</DependentUpon>
+    <EmbeddedResource Include="FrmServer.resx">
+      <DependentUpon>FrmServer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -90,9 +87,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LabAdmin.Shared\LabAdmin.Shared.csproj">

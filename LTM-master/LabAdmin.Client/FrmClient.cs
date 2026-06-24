@@ -67,7 +67,7 @@ namespace LabAdmin.Client
         {
             Socket sckUdp = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             // Client hứng gói tin broadcast ở port 8888
-            sckUdp.Bind(new IPEndPoint(IPAddress.Any, 8090));
+            sckUdp.Bind(new IPEndPoint(IPAddress.Any, 8888));
             byte[] buffer = new byte[1024];
             EndPoint remoteEp = new IPEndPoint(IPAddress.Any, 0);
 
@@ -173,23 +173,15 @@ namespace LabAdmin.Client
                             Process.Start("shutdown", "-s -t 0");
                             break;
 
-                        //case NetworkProtocol.CMD_MSG:
-                        //    // Cắt chuỗi lấy nội dung phía sau dấu |
-                        //    if (parts.Length > 1)
-                        //    {
-                        //        string msgContent = parts[1];
-                        //        MessageBox.Show(msgContent, "Thông báo từ Giáo viên", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        //    }
-                        //    break;
                         case NetworkProtocol.CMD_MSG:
+                            // Cắt chuỗi lấy nội dung phía sau dấu |
                             if (parts.Length > 1)
                             {
                                 string msgContent = parts[1];
-                                this.Invoke(new Action(() => {
-                                    MessageBox.Show(this, msgContent, "Thông báo...", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                }));
+                                MessageBox.Show(msgContent, "Thông báo từ Giáo viên", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             }
                             break;
+
                         case NetworkProtocol.CMD_PULL:
                             HandlePullCommand();
                             break;
@@ -206,24 +198,7 @@ namespace LabAdmin.Client
                 }
             }
         }
-        private void ToggleTaskManager(bool disable)
 
-        {
-            try
-            {
-                RegistryKey objRegistryKey = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Policies\System");
-                if (disable)
-                    objRegistryKey.SetValue("DisableTaskMgr", 1);
-                else
-                    objRegistryKey.DeleteValue("DisableTaskMgr");
-
-                objRegistryKey.Close();
-
-            }
-            catch { }
-
-
-        }
         // ----- XỬ LÝ DỮ LIỆU NẶNG (NHÁNH 3) -----
         private void HandlePullCommand()
         {
@@ -242,6 +217,7 @@ namespace LabAdmin.Client
                 {
                     File.Delete(zipFilePath);
                 }
+
                 // Dùng thư viện ZipFile.CreateFromDirectory() nén thư mục định sẵn
                 if (Directory.Exists(sourceDir))
                 {

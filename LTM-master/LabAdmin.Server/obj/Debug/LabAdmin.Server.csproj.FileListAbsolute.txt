@@ -1,0 +1,14 @@
+D:\CodeTam\LTM-master\LabAdmin.Server\bin\Debug\LabAdmin.Server.exe.config
+D:\CodeTam\LTM-master\LabAdmin.Server\bin\Debug\LabAdmin.Server.exe
+D:\CodeTam\LTM-master\LabAdmin.Server\bin\Debug\LabAdmin.Server.pdb
+D:\CodeTam\LTM-master\LabAdmin.Server\bin\Debug\LabAdmin.Shared.dll
+D:\CodeTam\LTM-master\LabAdmin.Server\bin\Debug\LabAdmin.Shared.pdb
+D:\CodeTam\LTM-master\LabAdmin.Server\obj\Debug\LabAdmin.Server.csproj.AssemblyReference.cache
+D:\CodeTam\LTM-master\LabAdmin.Server\obj\Debug\LabAdmin.Server.FrmImageViewer.resources
+D:\CodeTam\LTM-master\LabAdmin.Server\obj\Debug\LabAdmin.Server.frmServerMain.resources
+D:\CodeTam\LTM-master\LabAdmin.Server\obj\Debug\LabAdmin.Server.Properties.Resources.resources
+D:\CodeTam\LTM-master\LabAdmin.Server\obj\Debug\LabAdmin.Server.csproj.GenerateResource.cache
+D:\CodeTam\LTM-master\LabAdmin.Server\obj\Debug\LabAdmin.Server.csproj.CoreCompileInputs.cache
+D:\CodeTam\LTM-master\LabAdmin.Server\obj\Debug\LabAdmin.22008031.Up2Date
+D:\CodeTam\LTM-master\LabAdmin.Server\obj\Debug\LabAdmin.Server.exe
+D:\CodeTam\LTM-master\LabAdmin.Server\obj\Debug\LabAdmin.Server.pdb
