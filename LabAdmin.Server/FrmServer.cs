@@ -16,6 +16,9 @@ namespace LabAdmin.Server
 {
     public partial class frmServerMain : Form
     {
+        private bool isDragging = false;
+        private Point lastCursor;
+        private Point lastForm;
         // Lưu danh sách các máy đã kết nối (Dùng IP làm key, Socket làm value để dễ tìm)
         private Dictionary<string, Socket> clientList = new Dictionary<string, Socket>();
         // Tách thread riêng cho mạng để form không bị lag/treo
@@ -354,6 +357,99 @@ namespace LabAdmin.Server
         private void lstLogs_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void pnlTopBar_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                isDragging = true;
+                lastCursor = Cursor.Position;
+                lastForm = this.Location;
+            }
+        }
+
+        private void pnlTopBar_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                int xDiff = Cursor.Position.X - lastCursor.X;
+                int yDiff = Cursor.Position.Y - lastCursor.Y;
+                this.Location = new Point(lastForm.X + xDiff, lastForm.Y + yDiff);
+            }
+        }
+
+        private void pnlTopBar_MouseUp(object sender, MouseEventArgs e)
+        {
+            isDragging = false;
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvClients_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dgvClients_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.ColumnIndex == dgvClients.Columns["colStatus"].Index && e.RowIndex >= 0)
+            {
+                e.PaintBackground(e.CellBounds, true);
+
+                string status = e.Value?.ToString();
+                if (string.IsNullOrEmpty(status)) return;
+
+                // Thiết lập màu sắc: Xanh lá cho "Đang hoạt động", Đỏ cho "Đã khóa"
+                Color backColor = (status == "Đang hoạt động") ? Color.FromArgb(220, 245, 225) : Color.FromArgb(250, 230, 230);
+                Color foreColor = (status == "Đang hoạt động") ? Color.FromArgb(34, 160, 80) : Color.FromArgb(180, 50, 50);
+
+                // Tính toán kích thước nút bo góc
+                Rectangle rect = new Rectangle(e.CellBounds.X + 15, e.CellBounds.Y + 8, e.CellBounds.Width - 30, e.CellBounds.Height - 16);
+
+                using (System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath())
+                {
+                    int r = 10; // Độ bo góc
+                    path.AddArc(rect.X, rect.Y, r, r, 180, 90);
+                    path.AddArc(rect.Right - r, rect.Y, r, r, 270, 90);
+                    path.AddArc(rect.Right - r, rect.Bottom - r, r, r, 0, 90);
+                    path.AddArc(rect.X, rect.Bottom - r, r, r, 90, 90);
+                    path.CloseFigure();
+
+                    e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                    e.Graphics.FillPath(new SolidBrush(backColor), path);
+                    e.Graphics.DrawString(status, new Font("Segoe UI", 9, FontStyle.Bold), new SolidBrush(foreColor), rect, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+                }
+                e.Handled = true;
+            }
         }
     }
 }
