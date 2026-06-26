@@ -451,5 +451,54 @@ namespace LabAdmin.Server
                 e.Handled = true;
             }
         }
+
+        private void panel9_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+        private void UpdateTotalClients()
+        {
+            int count = 0;
+            foreach (DataGridViewRow row in dgvClients.Rows)
+            {
+                if (row.Cells["colStatus"].Value != null &&
+                    row.Cells["colStatus"].Value.ToString() == "Connected")
+                {
+                    count++;
+                }
+            }
+            label7.Text = "Đang hoạt động: " + count;
+        }
+
+        private void dgvClients_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            UpdateTotalClients();
+        }
+
+        private void dgvClients_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            UpdateTotalClients();
+        }
+
+        private void dgvClients_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            UpdateTotalClients();
+
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void btnScan_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }
