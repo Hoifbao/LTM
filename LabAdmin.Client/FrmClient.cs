@@ -255,30 +255,34 @@ namespace LabAdmin.Client
             catch { }
         }
 
-        private void HandleCaptureCommand()
+        private void label1_Click(object sender, EventArgs e)
         {
-            try
-            {
-                // Lấy kích thước hiển thị chính
-                Rectangle bounds = Screen.PrimaryScreen.Bounds;
-                using (Bitmap bitmap = new Bitmap(bounds.Width, bounds.Height))
-                {
-                    using (Graphics g = Graphics.FromImage(bitmap))
-                    {
-                        // Dùng Graphics.CopyFromScreen chụp màn hình
-                        g.CopyFromScreen(Point.Empty, Point.Empty, bounds.Size);
-                    }
 
-                    // Nén thành chuẩn JPEG, chuyển thành mảng Byte và Send()
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        bitmap.Save(ms, ImageFormat.Jpeg);
-                        byte[] imgBytes = ms.ToArray();
-                        tcpSocket.Send(imgBytes);
-                    }
-                }
-            }
-            catch { }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSubmit_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblIPAddress_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

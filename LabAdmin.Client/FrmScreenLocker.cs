@@ -38,5 +38,15 @@ namespace LabAdmin.Client
             this.WindowState = FormWindowState.Maximized; 
             this.TopMost = true; 
         }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
