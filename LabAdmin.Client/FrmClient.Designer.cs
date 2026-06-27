@@ -29,22 +29,25 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmClientMain));
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.pnlCard1 = new System.Windows.Forms.Panel();
+            this.lblClientIPAddress = new System.Windows.Forms.Label();
+            this.lblClientName = new System.Windows.Forms.Label();
             this.pnlCard2 = new System.Windows.Forms.Panel();
-            this.lblMachineName = new System.Windows.Forms.Label();
-            this.lblIPAddress = new System.Windows.Forms.Label();
-            this.btnStatus = new System.Windows.Forms.Button();
+            this.rtbLogsClient = new System.Windows.Forms.RichTextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.btnSubmit = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.rtbLogsClient = new System.Windows.Forms.RichTextBox();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.pnlCard1.SuspendLayout();
             this.pnlCard2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -89,13 +92,35 @@
             // pnlCard1
             // 
             this.pnlCard1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(40)))));
-            this.pnlCard1.Controls.Add(this.btnStatus);
-            this.pnlCard1.Controls.Add(this.lblIPAddress);
-            this.pnlCard1.Controls.Add(this.lblMachineName);
+            this.pnlCard1.Controls.Add(this.pictureBox3);
+            this.pnlCard1.Controls.Add(this.label5);
+            this.pnlCard1.Controls.Add(this.lblClientIPAddress);
+            this.pnlCard1.Controls.Add(this.lblClientName);
             this.pnlCard1.Location = new System.Drawing.Point(31, 134);
             this.pnlCard1.Name = "pnlCard1";
             this.pnlCard1.Size = new System.Drawing.Size(726, 135);
             this.pnlCard1.TabIndex = 1;
+            // 
+            // lblClientIPAddress
+            // 
+            this.lblClientIPAddress.AutoSize = true;
+            this.lblClientIPAddress.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblClientIPAddress.Location = new System.Drawing.Point(29, 79);
+            this.lblClientIPAddress.Name = "lblClientIPAddress";
+            this.lblClientIPAddress.Size = new System.Drawing.Size(207, 38);
+            this.lblClientIPAddress.TabIndex = 1;
+            this.lblClientIPAddress.Text = "Địa chỉ IP: ..........";
+            this.lblClientIPAddress.Click += new System.EventHandler(this.lblIPAddress_Click);
+            // 
+            // lblClientName
+            // 
+            this.lblClientName.AutoSize = true;
+            this.lblClientName.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblClientName.Location = new System.Drawing.Point(29, 18);
+            this.lblClientName.Name = "lblClientName";
+            this.lblClientName.Size = new System.Drawing.Size(123, 38);
+            this.lblClientName.TabIndex = 0;
+            this.lblClientName.Text = "PC: .......";
             // 
             // pnlCard2
             // 
@@ -106,82 +131,6 @@
             this.pnlCard2.Name = "pnlCard2";
             this.pnlCard2.Size = new System.Drawing.Size(726, 241);
             this.pnlCard2.TabIndex = 2;
-            // 
-            // lblMachineName
-            // 
-            this.lblMachineName.AutoSize = true;
-            this.lblMachineName.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMachineName.Location = new System.Drawing.Point(29, 18);
-            this.lblMachineName.Name = "lblMachineName";
-            this.lblMachineName.Size = new System.Drawing.Size(123, 38);
-            this.lblMachineName.TabIndex = 0;
-            this.lblMachineName.Text = "PC: .......";
-            // 
-            // lblIPAddress
-            // 
-            this.lblIPAddress.AutoSize = true;
-            this.lblIPAddress.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblIPAddress.Location = new System.Drawing.Point(29, 79);
-            this.lblIPAddress.Name = "lblIPAddress";
-            this.lblIPAddress.Size = new System.Drawing.Size(207, 38);
-            this.lblIPAddress.TabIndex = 1;
-            this.lblIPAddress.Text = "Địa chỉ IP: ..........";
-            this.lblIPAddress.Click += new System.EventHandler(this.lblIPAddress_Click);
-            // 
-            // btnStatus
-            // 
-            this.btnStatus.BackColor = System.Drawing.Color.White;
-            this.btnStatus.FlatAppearance.BorderSize = 0;
-            this.btnStatus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnStatus.ForeColor = System.Drawing.Color.DimGray;
-            this.btnStatus.Location = new System.Drawing.Point(524, 24);
-            this.btnStatus.Name = "btnStatus";
-            this.btnStatus.Size = new System.Drawing.Size(181, 38);
-            this.btnStatus.TabIndex = 2;
-            this.btnStatus.Text = "Đang tìm Server...";
-            this.btnStatus.UseVisualStyleBackColor = false;
-            // 
-            // btnSubmit
-            // 
-            this.btnSubmit.BackColor = System.Drawing.Color.DimGray;
-            this.btnSubmit.FlatAppearance.BorderSize = 0;
-            this.btnSubmit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSubmit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSubmit.ForeColor = System.Drawing.Color.Black;
-            this.btnSubmit.Location = new System.Drawing.Point(67, 573);
-            this.btnSubmit.Name = "btnSubmit";
-            this.btnSubmit.Size = new System.Drawing.Size(247, 38);
-            this.btnSubmit.TabIndex = 3;
-            this.btnSubmit.Text = "Chọn File Và Nộp Bài";
-            this.btnSubmit.UseVisualStyleBackColor = false;
-            this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click);
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.FlatAppearance.BorderSize = 0;
-            this.checkBox1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lime;
-            this.checkBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox1.Location = new System.Drawing.Point(520, 578);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(175, 33);
-            this.checkBox1.TabIndex = 5;
-            this.checkBox1.Text = "Giơ tay hỗ trợ";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label2.Location = new System.Drawing.Point(29, 9);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(304, 38);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Thông báo từ máy chủ ";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // rtbLogsClient
             // 
@@ -197,10 +146,77 @@
             this.rtbLogsClient.TabIndex = 22;
             this.rtbLogsClient.Text = "";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label2.Location = new System.Drawing.Point(29, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(304, 38);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Thông báo từ máy chủ ";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
+            // 
+            // btnSubmit
+            // 
+            this.btnSubmit.BackColor = System.Drawing.Color.DimGray;
+            this.btnSubmit.FlatAppearance.BorderSize = 0;
+            this.btnSubmit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSubmit.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSubmit.ForeColor = System.Drawing.Color.Black;
+            this.btnSubmit.Location = new System.Drawing.Point(67, 573);
+            this.btnSubmit.Name = "btnSubmit";
+            this.btnSubmit.Size = new System.Drawing.Size(247, 38);
+            this.btnSubmit.TabIndex = 3;
+            this.btnSubmit.Text = "Chọn File Và Nộp Bài";
+            this.btnSubmit.UseVisualStyleBackColor = false;
+            this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.FlatAppearance.BorderSize = 0;
+            this.checkBox1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lime;
+            this.checkBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBox1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox1.Location = new System.Drawing.Point(520, 578);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(182, 36);
+            this.checkBox1.TabIndex = 5;
+            this.checkBox1.Text = "Giơ tay hỗ trợ";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
             // notifyIcon1
             // 
             this.notifyIcon1.Text = "notifyIcon1";
             this.notifyIcon1.Visible = true;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox3.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
+            this.pictureBox3.Location = new System.Drawing.Point(587, 11);
+            this.pictureBox3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(25, 35);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox3.TabIndex = 9;
+            this.pictureBox3.TabStop = false;
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.label5.Location = new System.Drawing.Point(617, 18);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(88, 21);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Đã kết nối";
             // 
             // frmClientMain
             // 
@@ -228,6 +244,7 @@
             this.pnlCard1.PerformLayout();
             this.pnlCard2.ResumeLayout(false);
             this.pnlCard2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -240,14 +257,15 @@
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.Panel pnlCard1;
         private System.Windows.Forms.Panel pnlCard2;
-        private System.Windows.Forms.Label lblIPAddress;
-        private System.Windows.Forms.Label lblMachineName;
-        private System.Windows.Forms.Button btnStatus;
+        private System.Windows.Forms.Label lblClientIPAddress;
+        private System.Windows.Forms.Label lblClientName;
         private System.Windows.Forms.Button btnSubmit;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.RichTextBox rtbLogsClient;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.Label label5;
     }
 }
 

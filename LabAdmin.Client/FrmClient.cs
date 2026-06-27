@@ -284,5 +284,10 @@ namespace LabAdmin.Client
         {
 
         }
+
+        private void btnStatus_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
