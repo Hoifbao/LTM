@@ -84,7 +84,7 @@ namespace LabAdmin.Server
                 // Bắn broadcast tới toàn mạng LAN ở port 8888
                 IPEndPoint ep = new IPEndPoint(IPAddress.Broadcast, 8888);
                 sckUdp.SendTo(sendData, ep);
-
+                LogMessage("Hệ thống: Đã phát lệnh điểm danh toàn phòng máy.");
                 sckUdp.Close();
                 MessageBox.Show("Đã phát lệnh điểm danh toàn phòng máy!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -96,8 +96,8 @@ namespace LabAdmin.Server
         private void ListenUDP()
         {
             Socket sckUdp = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            // Server hứng gói tin phản hồi ở port 8889
-            sckUdp.Bind(new IPEndPoint(IPAddress.Any, 8889));
+            // Server hứng gói tin phản hồi ở port 8090
+            sckUdp.Bind(new IPEndPoint(IPAddress.Any, 8090));
             byte[] buffer = new byte[1024];
             EndPoint remoteEp = new IPEndPoint(IPAddress.Any, 0);
             while (true)
@@ -239,6 +239,7 @@ namespace LabAdmin.Server
                     // Đóng gói và bắn lệnh LOCK
                     byte[] data = Encoding.UTF8.GetBytes(NetworkProtocol.CMD_LOCK);
                     client.Send(data);
+                    LogMessage($"Lệnh KHÓA đã được gửi tới máy: {targetIP}");
                     MessageBox.Show("Đã gửi lệnh KHÓA tới máy: " + targetIP, "Thành công");
                 }
                 catch (Exception ex)
@@ -254,12 +255,14 @@ namespace LabAdmin.Server
         private void btnMsg_Click(object sender, EventArgs e)
         {
             string targetIP = GetSelectedIP();
+
             // Bắt lỗi rỗng
             if (string.IsNullOrWhiteSpace(txtMessage.Text))
             {
                 MessageBox.Show("Vui lòng nhập nội dung cần thông báo!", "Chú ý");
                 return;
             }
+
             if (targetIP != null && clientList.ContainsKey(targetIP))
             {
                 try
@@ -272,11 +275,16 @@ namespace LabAdmin.Server
 
                     client.Send(data);
 
+                    // --- THÊM DÒNG NÀY ĐỂ CẬP NHẬT NHẬT KÝ ---
+                    LogMessage($"Đã gửi thông báo tới {targetIP}: {txtMessage.Text}");
+                    // ------------------------------------------
+
                     MessageBox.Show("Đã gửi thông báo tới máy: " + targetIP, "Thành công");
-                    txtMessage.Clear(); // Gửi xong thì clear text đi
+                    txtMessage.Clear();
                 }
                 catch (Exception ex)
                 {
+                    LogMessage($"Lỗi khi gửi thông báo tới {targetIP}: {ex.Message}"); // Log cả lỗi
                     MessageBox.Show("Lỗi khi gửi thông báo: " + ex.Message, "Lỗi");
                 }
             }
@@ -303,7 +311,7 @@ namespace LabAdmin.Server
                         Socket client = clientList[targetIP];
                         byte[] data = Encoding.UTF8.GetBytes(NetworkProtocol.CMD_PULL);
                         client.Send(data);
-
+                        LogMessage($"Lệnh THU BÀI đã được phát tới máy: {targetIP}. Lưu tại: {SaveFolderPath}");
                         LogToConsole($"Đã phát lệnh THU BÀI tới máy {targetIP}. Sẽ lưu tại: {SaveFolderPath}");
                     }
                 }
@@ -312,13 +320,8 @@ namespace LabAdmin.Server
         // Hàm hỗ trợ ghi log có màu sắc
         private void LogToConsole(string message)
         {
-            if (lstLogs.InvokeRequired)
-            {
-                lstLogs.Invoke(new Action<string>(LogToConsole), message);
-                return;
-            }
-            lstLogs.Items.Add($"[{DateTime.Now:HH:mm:ss}] {message}");
-            lstLogs.TopIndex = lstLogs.Items.Count - 1; // Tự động cuộn xuống dòng mới nhất
+
+            LogMessage(message);
         }
         private void btnCapture_Click(object sender, EventArgs e)
         {
@@ -354,7 +357,7 @@ namespace LabAdmin.Server
 
         }
 
-        private void lstLogs_SelectedIndexChanged(object sender, EventArgs e)
+        private void rtbLogs_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
@@ -469,6 +472,33 @@ namespace LabAdmin.Server
             }
             label7.Text = "Đang hoạt động: " + count;
         }
+        private void FrmServer_Load(object sender, EventArgs e)
+        {
+            LogMessage("Hệ thống: Server Lab Admin đã khởi động.");
+            LogMessage("Mạng: Đang lắng nghe kết nối từ sinh viên...");
+        }
+        private void LogMessage(string message)
+        {
+            // Gọi hàm mới nhưng mặc định chọn màu Xanh lá (Lime)
+            LogMessage(message, Color.Lime);
+        }
+        private void LogMessage(string message, Color color)
+{
+    if (this.InvokeRequired)
+    {
+        this.Invoke(new Action<string, Color>(LogMessage), message, color);
+        return;
+    }
+
+    string timeStamp = DateTime.Now.ToString("HH:mm:ss");
+    string logLine = $"[{timeStamp}] {message}\n";
+
+    rtbLogs.SelectionStart = rtbLogs.TextLength;
+    rtbLogs.SelectionLength = 0;
+    rtbLogs.SelectionColor = color; // Tô màu theo tham số truyền vào
+    rtbLogs.AppendText(logLine);
+    rtbLogs.ScrollToCaret();
+}
 
         private void dgvClients_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {

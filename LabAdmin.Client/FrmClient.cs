@@ -67,7 +67,7 @@ namespace LabAdmin.Client
         {
             Socket sckUdp = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             // Client hứng gói tin broadcast ở port 8888
-            sckUdp.Bind(new IPEndPoint(IPAddress.Any, 8090));
+            sckUdp.Bind(new IPEndPoint(IPAddress.Any, 8888));
             byte[] buffer = new byte[1024];
             EndPoint remoteEp = new IPEndPoint(IPAddress.Any, 0);
 

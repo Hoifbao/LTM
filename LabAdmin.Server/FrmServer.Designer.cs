@@ -28,18 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmServerMain));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.dgvClients = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel8 = new System.Windows.Forms.Panel();
             this.panel9 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
@@ -47,6 +44,19 @@
             this.label6 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnCapture = new System.Windows.Forms.Button();
+            this.picChupManHinh = new System.Windows.Forms.PictureBox();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.picThuBai = new System.Windows.Forms.PictureBox();
+            this.btnPull = new System.Windows.Forms.Button();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.picQuetMang = new System.Windows.Forms.PictureBox();
+            this.btnScan = new System.Windows.Forms.Button();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.picKhoaManHinh = new System.Windows.Forms.PictureBox();
+            this.btnLock = new System.Windows.Forms.Button();
             this.panel5 = new System.Windows.Forms.Panel();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -57,7 +67,6 @@
             this.btnMsg = new System.Windows.Forms.Button();
             this.txtMessage = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.lstLogs = new System.Windows.Forms.ListBox();
             this.panel7 = new System.Windows.Forms.Panel();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -67,19 +76,10 @@
             this.label5 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.picChupManHinh = new System.Windows.Forms.PictureBox();
-            this.picThuBai = new System.Windows.Forms.PictureBox();
-            this.picKhoaManHinh = new System.Windows.Forms.PictureBox();
-            this.btnScan = new System.Windows.Forms.Button();
-            this.picQuetMang = new System.Windows.Forms.PictureBox();
-            this.btnCapture = new System.Windows.Forms.Button();
-            this.btnLock = new System.Windows.Forms.Button();
-            this.btnPull = new System.Windows.Forms.Button();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.IP = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.rtbLogs = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -90,6 +90,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picChupManHinh)).BeginInit();
+            this.tableLayoutPanel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picThuBai)).BeginInit();
+            this.tableLayoutPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picQuetMang)).BeginInit();
+            this.tableLayoutPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picKhoaManHinh)).BeginInit();
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.panel4.SuspendLayout();
@@ -101,15 +110,6 @@
             this.pnlTopBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picChupManHinh)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picThuBai)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picKhoaManHinh)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picQuetMang)).BeginInit();
-            this.tableLayoutPanel2.SuspendLayout();
-            this.tableLayoutPanel3.SuspendLayout();
-            this.tableLayoutPanel4.SuspendLayout();
-            this.tableLayoutPanel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -139,42 +139,42 @@
             this.dgvClients.BackgroundColor = System.Drawing.Color.White;
             this.dgvClients.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvClients.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvClients.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvClients.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvClients.ColumnHeadersHeight = 40;
             this.dgvClients.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvClients.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1,
+            this.IP,
             this.Column2,
             this.colStatus});
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvClients.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvClients.DefaultCellStyle = dataGridViewCellStyle5;
             this.dgvClients.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvClients.EnableHeadersVisualStyles = false;
             this.dgvClients.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.dgvClients.Location = new System.Drawing.Point(0, 42);
             this.dgvClients.Name = "dgvClients";
             this.dgvClients.ReadOnly = true;
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.Transparent;
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvClients.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvClients.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvClients.RowHeadersVisible = false;
             this.dgvClients.RowHeadersWidth = 51;
             this.dgvClients.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
@@ -188,35 +188,6 @@
             this.dgvClients.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvClients_DataBindingComplete);
             this.dgvClients.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvClients_RowsAdded);
             this.dgvClients.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dgvClients_RowsRemoved);
-            // 
-            // Column1
-            // 
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle8;
-            this.Column1.HeaderText = "IP";
-            this.Column1.MinimumWidth = 6;
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            // 
-            // Column2
-            // 
-            dataGridViewCellStyle9.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.Column2.DefaultCellStyle = dataGridViewCellStyle9;
-            this.Column2.HeaderText = "Tên Máy";
-            this.Column2.MinimumWidth = 6;
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            // 
-            // colStatus
-            // 
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.colStatus.DefaultCellStyle = dataGridViewCellStyle10;
-            this.colStatus.HeaderText = "Trạng Thái";
-            this.colStatus.MinimumWidth = 6;
-            this.colStatus.Name = "colStatus";
-            this.colStatus.ReadOnly = true;
             // 
             // panel8
             // 
@@ -298,6 +269,207 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(505, 228);
             this.panel3.TabIndex = 21;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel5, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel4, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 1, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(43, 3);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(422, 228);
+            this.tableLayoutPanel1.TabIndex = 4;
+            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
+            // 
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.ColumnCount = 1;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.Controls.Add(this.btnCapture, 0, 1);
+            this.tableLayoutPanel5.Controls.Add(this.picChupManHinh, 0, 0);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(216, 117);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 2;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 37.03704F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 62.96296F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(207, 108);
+            this.tableLayoutPanel5.TabIndex = 3;
+            // 
+            // btnCapture
+            // 
+            this.btnCapture.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCapture.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.btnCapture.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCapture.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.btnCapture.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCapture.ForeColor = System.Drawing.Color.White;
+            this.btnCapture.Location = new System.Drawing.Point(3, 43);
+            this.btnCapture.Name = "btnCapture";
+            this.btnCapture.Size = new System.Drawing.Size(201, 62);
+            this.btnCapture.TabIndex = 25;
+            this.btnCapture.Text = "Chụp màn hình";
+            this.btnCapture.UseVisualStyleBackColor = false;
+            // 
+            // picChupManHinh
+            // 
+            this.picChupManHinh.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.picChupManHinh.BackColor = System.Drawing.Color.Transparent;
+            this.picChupManHinh.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picChupManHinh.Image = ((System.Drawing.Image)(resources.GetObject("picChupManHinh.Image")));
+            this.picChupManHinh.Location = new System.Drawing.Point(87, 4);
+            this.picChupManHinh.Name = "picChupManHinh";
+            this.picChupManHinh.Size = new System.Drawing.Size(32, 32);
+            this.picChupManHinh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picChupManHinh.TabIndex = 28;
+            this.picChupManHinh.TabStop = false;
+            // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.ColumnCount = 1;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.Controls.Add(this.picThuBai, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.btnPull, 0, 1);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 117);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 2;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 37.03704F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 62.96296F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(207, 108);
+            this.tableLayoutPanel4.TabIndex = 2;
+            // 
+            // picThuBai
+            // 
+            this.picThuBai.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.picThuBai.BackColor = System.Drawing.Color.Transparent;
+            this.picThuBai.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picThuBai.Image = ((System.Drawing.Image)(resources.GetObject("picThuBai.Image")));
+            this.picThuBai.Location = new System.Drawing.Point(87, 4);
+            this.picThuBai.Name = "picThuBai";
+            this.picThuBai.Size = new System.Drawing.Size(32, 32);
+            this.picThuBai.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picThuBai.TabIndex = 27;
+            this.picThuBai.TabStop = false;
+            // 
+            // btnPull
+            // 
+            this.btnPull.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPull.BackColor = System.Drawing.Color.Lime;
+            this.btnPull.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnPull.FlatAppearance.BorderColor = System.Drawing.Color.Lime;
+            this.btnPull.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPull.ForeColor = System.Drawing.Color.White;
+            this.btnPull.Location = new System.Drawing.Point(3, 43);
+            this.btnPull.Name = "btnPull";
+            this.btnPull.Size = new System.Drawing.Size(201, 62);
+            this.btnPull.TabIndex = 24;
+            this.btnPull.Text = "Thu bài";
+            this.btnPull.UseVisualStyleBackColor = false;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Controls.Add(this.picQuetMang, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.btnScan, 0, 1);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 66.66666F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(207, 108);
+            this.tableLayoutPanel2.TabIndex = 0;
+            this.tableLayoutPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel2_Paint);
+            // 
+            // picQuetMang
+            // 
+            this.picQuetMang.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.picQuetMang.BackColor = System.Drawing.Color.Transparent;
+            this.picQuetMang.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picQuetMang.Image = ((System.Drawing.Image)(resources.GetObject("picQuetMang.Image")));
+            this.picQuetMang.Location = new System.Drawing.Point(87, 3);
+            this.picQuetMang.Name = "picQuetMang";
+            this.picQuetMang.Size = new System.Drawing.Size(32, 29);
+            this.picQuetMang.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picQuetMang.TabIndex = 21;
+            this.picQuetMang.TabStop = false;
+            // 
+            // btnScan
+            // 
+            this.btnScan.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnScan.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(115)))), ((int)(((byte)(22)))));
+            this.btnScan.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnScan.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(115)))), ((int)(((byte)(22)))));
+            this.btnScan.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnScan.ForeColor = System.Drawing.Color.White;
+            this.btnScan.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnScan.Location = new System.Drawing.Point(3, 39);
+            this.btnScan.Name = "btnScan";
+            this.btnScan.Size = new System.Drawing.Size(201, 66);
+            this.btnScan.TabIndex = 22;
+            this.btnScan.Text = "Quét mạng";
+            this.btnScan.UseVisualStyleBackColor = false;
+            this.btnScan.Click += new System.EventHandler(this.btnScan_Click_1);
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 1;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Controls.Add(this.picKhoaManHinh, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.btnLock, 0, 1);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(216, 3);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 66.66666F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(207, 108);
+            this.tableLayoutPanel3.TabIndex = 1;
+            // 
+            // picKhoaManHinh
+            // 
+            this.picKhoaManHinh.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.picKhoaManHinh.BackColor = System.Drawing.Color.Transparent;
+            this.picKhoaManHinh.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picKhoaManHinh.Image = ((System.Drawing.Image)(resources.GetObject("picKhoaManHinh.Image")));
+            this.picKhoaManHinh.Location = new System.Drawing.Point(87, 3);
+            this.picKhoaManHinh.Name = "picKhoaManHinh";
+            this.picKhoaManHinh.Size = new System.Drawing.Size(32, 29);
+            this.picKhoaManHinh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picKhoaManHinh.TabIndex = 26;
+            this.picKhoaManHinh.TabStop = false;
+            // 
+            // btnLock
+            // 
+            this.btnLock.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLock.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(63)))), ((int)(((byte)(94)))));
+            this.btnLock.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnLock.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(63)))), ((int)(((byte)(94)))));
+            this.btnLock.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLock.ForeColor = System.Drawing.Color.White;
+            this.btnLock.Location = new System.Drawing.Point(3, 39);
+            this.btnLock.Name = "btnLock";
+            this.btnLock.Size = new System.Drawing.Size(201, 66);
+            this.btnLock.TabIndex = 23;
+            this.btnLock.Text = "Khóa màn hình";
+            this.btnLock.UseVisualStyleBackColor = false;
             // 
             // panel5
             // 
@@ -410,25 +582,12 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.White;
-            this.panel2.Controls.Add(this.lstLogs);
+            this.panel2.Controls.Add(this.rtbLogs);
             this.panel2.Controls.Add(this.panel7);
             this.panel2.Location = new System.Drawing.Point(15, 380);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(504, 413);
             this.panel2.TabIndex = 20;
-            // 
-            // lstLogs
-            // 
-            this.lstLogs.BackColor = System.Drawing.Color.Black;
-            this.lstLogs.Font = new System.Drawing.Font("Consolas", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lstLogs.ForeColor = System.Drawing.Color.Lime;
-            this.lstLogs.FormattingEnabled = true;
-            this.lstLogs.ItemHeight = 20;
-            this.lstLogs.Location = new System.Drawing.Point(3, 46);
-            this.lstLogs.Name = "lstLogs";
-            this.lstLogs.Size = new System.Drawing.Size(498, 364);
-            this.lstLogs.TabIndex = 16;
-            this.lstLogs.SelectedIndexChanged += new System.EventHandler(this.lstLogs_SelectedIndexChanged);
             // 
             // panel7
             // 
@@ -547,206 +706,47 @@
             this.label4.TabIndex = 3;
             this.label4.Text = "Lab Admin Server Dashboard";
             // 
-            // tableLayoutPanel1
+            // IP
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel5, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel4, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 1, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(43, 3);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(422, 228);
-            this.tableLayoutPanel1.TabIndex = 4;
-            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.IP.DefaultCellStyle = dataGridViewCellStyle2;
+            this.IP.HeaderText = "IP";
+            this.IP.MinimumWidth = 6;
+            this.IP.Name = "IP";
+            this.IP.ReadOnly = true;
             // 
-            // picChupManHinh
+            // Column2
             // 
-            this.picChupManHinh.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.picChupManHinh.BackColor = System.Drawing.Color.Transparent;
-            this.picChupManHinh.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picChupManHinh.Image = ((System.Drawing.Image)(resources.GetObject("picChupManHinh.Image")));
-            this.picChupManHinh.Location = new System.Drawing.Point(87, 4);
-            this.picChupManHinh.Name = "picChupManHinh";
-            this.picChupManHinh.Size = new System.Drawing.Size(32, 32);
-            this.picChupManHinh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picChupManHinh.TabIndex = 28;
-            this.picChupManHinh.TabStop = false;
+            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.Column2.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Column2.HeaderText = "Tên Máy";
+            this.Column2.MinimumWidth = 6;
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
             // 
-            // picThuBai
+            // colStatus
             // 
-            this.picThuBai.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.picThuBai.BackColor = System.Drawing.Color.Transparent;
-            this.picThuBai.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picThuBai.Image = ((System.Drawing.Image)(resources.GetObject("picThuBai.Image")));
-            this.picThuBai.Location = new System.Drawing.Point(87, 4);
-            this.picThuBai.Name = "picThuBai";
-            this.picThuBai.Size = new System.Drawing.Size(32, 32);
-            this.picThuBai.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picThuBai.TabIndex = 27;
-            this.picThuBai.TabStop = false;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.colStatus.DefaultCellStyle = dataGridViewCellStyle4;
+            this.colStatus.HeaderText = "Trạng Thái";
+            this.colStatus.MinimumWidth = 6;
+            this.colStatus.Name = "colStatus";
+            this.colStatus.ReadOnly = true;
             // 
-            // picKhoaManHinh
+            // rtbLogs
             // 
-            this.picKhoaManHinh.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.picKhoaManHinh.BackColor = System.Drawing.Color.Transparent;
-            this.picKhoaManHinh.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picKhoaManHinh.Image = ((System.Drawing.Image)(resources.GetObject("picKhoaManHinh.Image")));
-            this.picKhoaManHinh.Location = new System.Drawing.Point(87, 3);
-            this.picKhoaManHinh.Name = "picKhoaManHinh";
-            this.picKhoaManHinh.Size = new System.Drawing.Size(32, 29);
-            this.picKhoaManHinh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picKhoaManHinh.TabIndex = 26;
-            this.picKhoaManHinh.TabStop = false;
-            // 
-            // btnScan
-            // 
-            this.btnScan.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnScan.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(115)))), ((int)(((byte)(22)))));
-            this.btnScan.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnScan.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(115)))), ((int)(((byte)(22)))));
-            this.btnScan.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnScan.ForeColor = System.Drawing.Color.White;
-            this.btnScan.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnScan.Location = new System.Drawing.Point(3, 38);
-            this.btnScan.Name = "btnScan";
-            this.btnScan.Size = new System.Drawing.Size(201, 67);
-            this.btnScan.TabIndex = 22;
-            this.btnScan.Text = "Quét mạng";
-            this.btnScan.UseVisualStyleBackColor = false;
-            this.btnScan.Click += new System.EventHandler(this.btnScan_Click_1);
-            // 
-            // picQuetMang
-            // 
-            this.picQuetMang.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.picQuetMang.BackColor = System.Drawing.Color.Transparent;
-            this.picQuetMang.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picQuetMang.Image = ((System.Drawing.Image)(resources.GetObject("picQuetMang.Image")));
-            this.picQuetMang.Location = new System.Drawing.Point(87, 3);
-            this.picQuetMang.Name = "picQuetMang";
-            this.picQuetMang.Size = new System.Drawing.Size(32, 29);
-            this.picQuetMang.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picQuetMang.TabIndex = 21;
-            this.picQuetMang.TabStop = false;
-            // 
-            // btnCapture
-            // 
-            this.btnCapture.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCapture.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.btnCapture.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCapture.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.btnCapture.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCapture.ForeColor = System.Drawing.Color.White;
-            this.btnCapture.Location = new System.Drawing.Point(3, 43);
-            this.btnCapture.Name = "btnCapture";
-            this.btnCapture.Size = new System.Drawing.Size(201, 62);
-            this.btnCapture.TabIndex = 25;
-            this.btnCapture.Text = "Chụp màn hình";
-            this.btnCapture.UseVisualStyleBackColor = false;
-            // 
-            // btnLock
-            // 
-            this.btnLock.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLock.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(63)))), ((int)(((byte)(94)))));
-            this.btnLock.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnLock.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(63)))), ((int)(((byte)(94)))));
-            this.btnLock.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLock.ForeColor = System.Drawing.Color.White;
-            this.btnLock.Location = new System.Drawing.Point(3, 38);
-            this.btnLock.Name = "btnLock";
-            this.btnLock.Size = new System.Drawing.Size(201, 67);
-            this.btnLock.TabIndex = 23;
-            this.btnLock.Text = "Khóa màn hình";
-            this.btnLock.UseVisualStyleBackColor = false;
-            // 
-            // btnPull
-            // 
-            this.btnPull.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPull.BackColor = System.Drawing.Color.Lime;
-            this.btnPull.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnPull.FlatAppearance.BorderColor = System.Drawing.Color.Lime;
-            this.btnPull.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPull.ForeColor = System.Drawing.Color.White;
-            this.btnPull.Location = new System.Drawing.Point(3, 43);
-            this.btnPull.Name = "btnPull";
-            this.btnPull.Size = new System.Drawing.Size(201, 62);
-            this.btnPull.TabIndex = 24;
-            this.btnPull.Text = "Thu bài";
-            this.btnPull.UseVisualStyleBackColor = false;
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 1;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Controls.Add(this.picQuetMang, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.btnScan, 0, 1);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 66.66666F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(207, 108);
-            this.tableLayoutPanel2.TabIndex = 0;
-            this.tableLayoutPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel2_Paint);
-            // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.ColumnCount = 1;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Controls.Add(this.picKhoaManHinh, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.btnLock, 0, 1);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(216, 3);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 2;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 66.66666F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(207, 108);
-            this.tableLayoutPanel3.TabIndex = 1;
-            // 
-            // tableLayoutPanel4
-            // 
-            this.tableLayoutPanel4.ColumnCount = 1;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Controls.Add(this.picThuBai, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.btnPull, 0, 1);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 117);
-            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 2;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 37.03704F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 62.96296F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(207, 108);
-            this.tableLayoutPanel4.TabIndex = 2;
-            // 
-            // tableLayoutPanel5
-            // 
-            this.tableLayoutPanel5.ColumnCount = 1;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Controls.Add(this.btnCapture, 0, 1);
-            this.tableLayoutPanel5.Controls.Add(this.picChupManHinh, 0, 0);
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(216, 117);
-            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 2;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 37.03704F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 62.96296F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(207, 108);
-            this.tableLayoutPanel5.TabIndex = 3;
+            this.rtbLogs.BackColor = System.Drawing.Color.Black;
+            this.rtbLogs.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtbLogs.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbLogs.ForeColor = System.Drawing.Color.Lime;
+            this.rtbLogs.Location = new System.Drawing.Point(6, 39);
+            this.rtbLogs.Name = "rtbLogs";
+            this.rtbLogs.ReadOnly = true;
+            this.rtbLogs.Size = new System.Drawing.Size(495, 371);
+            this.rtbLogs.TabIndex = 21;
+            this.rtbLogs.Text = "";
             // 
             // frmServerMain
             // 
@@ -773,6 +773,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picChupManHinh)).EndInit();
+            this.tableLayoutPanel4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picThuBai)).EndInit();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picQuetMang)).EndInit();
+            this.tableLayoutPanel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picKhoaManHinh)).EndInit();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
@@ -789,15 +798,6 @@
             this.pnlTopBar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.tableLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picChupManHinh)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picThuBai)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picKhoaManHinh)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picQuetMang)).EndInit();
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel3.ResumeLayout(false);
-            this.tableLayoutPanel4.ResumeLayout(false);
-            this.tableLayoutPanel5.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -808,7 +808,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ListBox lstLogs;
         private System.Windows.Forms.Button btnMsg;
         private System.Windows.Forms.TextBox txtMessage;
         private System.Windows.Forms.Label label3;
@@ -833,9 +832,6 @@
         private System.Windows.Forms.PictureBox pictureBox6;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colStatus;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.PictureBox picChupManHinh;
@@ -849,5 +845,9 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IP;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colStatus;
+        private System.Windows.Forms.RichTextBox rtbLogs;
     }
 }
