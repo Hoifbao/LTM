@@ -1,52 +1,47 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LabAdmin.Client
 {
     public partial class FrmScreenLocker : Form
     {
+        // =========================================================
+        // 1. KHỞI TẠO FORM VÀ ĐĂNG KÝ SỰ KIỆN
+        // =========================================================
         public FrmScreenLocker()
         {
             InitializeComponent();
-            // Đăng ký sự kiện quản lý đóng Form
+
+            // Lắng nghe sự kiện trước khi Form bị đóng để can thiệp chặn lại
             this.FormClosing += FrmScreenLocker_FormClosing;
         }
 
-        // ----- XỬ LÝ CHẶN ĐÓNG FORM BẰNG ALT + F4 -----
+        // =========================================================
+        // 2. CHẶN PHÍM TẮT ALT + F4
+        // =========================================================
         private void FrmScreenLocker_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Nếu tác vụ đóng Form xuất phát từ phía người dùng (ấn Alt + F4, bấm Close...)
+            // CloseReason.UserClosing: Là khi sinh viên cố tình bấm Alt+F4 hoặc dùng Task Manager end task
             if (e.CloseReason == CloseReason.UserClosing)
             {
-                e.Cancel = true; // Hủy lệnh đóng Form, ép màn hình tiếp tục khóa
+                // Hủy bỏ lệnh đóng Form, ép Form phải mở tiếp
+                e.Cancel = true;
             }
         }
 
-        //private void FrmScreenLocker_Load(object sender, EventArgs e)
-        //{
-
-        //}
-        private void FrmScreenLocker_Load(object sender, EventArgs e) 
-        { this.FormBorderStyle = FormBorderStyle.None; 
-            this.WindowState = FormWindowState.Maximized; 
-            this.TopMost = true; 
-        }
-
-        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        // =========================================================
+        // 3. CẤU HÌNH HIỂN THỊ CHIẾM QUYỀN TOÀN MÀN HÌNH
+        // =========================================================
+        private void FrmScreenLocker_Load(object sender, EventArgs e)
         {
+            // Tắt viền cửa sổ, tắt 3 nút thu phóng/đóng mặc định của Windows
+            this.FormBorderStyle = FormBorderStyle.None;
 
-        }
+            // Phóng to tràn viền, che luôn thanh Taskbar bên dưới
+            this.WindowState = FormWindowState.Maximized;
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
+            // Thuộc tính quan trọng nhất: Ép Form này luôn nằm đè lên trên tất cả các ứng dụng khác
+            this.TopMost = true;
         }
     }
 }

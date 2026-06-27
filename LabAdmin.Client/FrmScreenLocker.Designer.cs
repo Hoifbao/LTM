@@ -86,7 +86,6 @@
             this.label1.Size = new System.Drawing.Size(335, 45);
             this.label1.TabIndex = 1;
             this.label1.Text = "Máy Tính Đã Bị Khóa";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // pictureBox1
             // 

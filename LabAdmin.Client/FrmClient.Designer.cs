@@ -34,6 +34,8 @@
             this.btnRefresh = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.pnlCard1 = new System.Windows.Forms.Panel();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.lblClientIPAddress = new System.Windows.Forms.Label();
             this.lblClientName = new System.Windows.Forms.Label();
             this.pnlCard2 = new System.Windows.Forms.Panel();
@@ -42,12 +44,10 @@
             this.btnSubmit = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.pnlCard1.SuspendLayout();
-            this.pnlCard2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            this.pnlCard2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -75,7 +75,6 @@
             this.btnRefresh.TabIndex = 1;
             this.btnRefresh.Text = "↺";
             this.btnRefresh.UseVisualStyleBackColor = false;
-            this.btnRefresh.Click += new System.EventHandler(this.button1_Click);
             // 
             // label1
             // 
@@ -87,7 +86,6 @@
             this.label1.Size = new System.Drawing.Size(414, 45);
             this.label1.TabIndex = 0;
             this.label1.Text = "Bảng điều khiển máy trạm";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // pnlCard1
             // 
@@ -101,6 +99,31 @@
             this.pnlCard1.Size = new System.Drawing.Size(726, 135);
             this.pnlCard1.TabIndex = 1;
             // 
+            // pictureBox3
+            // 
+            this.pictureBox3.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox3.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
+            this.pictureBox3.Location = new System.Drawing.Point(587, 11);
+            this.pictureBox3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(25, 35);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox3.TabIndex = 9;
+            this.pictureBox3.TabStop = false;
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.label5.Location = new System.Drawing.Point(617, 18);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(88, 21);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Đã kết nối";
+            // 
             // lblClientIPAddress
             // 
             this.lblClientIPAddress.AutoSize = true;
@@ -110,7 +133,6 @@
             this.lblClientIPAddress.Size = new System.Drawing.Size(207, 38);
             this.lblClientIPAddress.TabIndex = 1;
             this.lblClientIPAddress.Text = "Địa chỉ IP: ..........";
-            this.lblClientIPAddress.Click += new System.EventHandler(this.lblIPAddress_Click);
             // 
             // lblClientName
             // 
@@ -156,7 +178,6 @@
             this.label2.Size = new System.Drawing.Size(304, 38);
             this.label2.TabIndex = 2;
             this.label2.Text = "Thông báo từ máy chủ ";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // btnSubmit
             // 
@@ -171,7 +192,6 @@
             this.btnSubmit.TabIndex = 3;
             this.btnSubmit.Text = "Chọn File Và Nộp Bài";
             this.btnSubmit.UseVisualStyleBackColor = false;
-            this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click);
             // 
             // checkBox1
             // 
@@ -186,37 +206,11 @@
             this.checkBox1.TabIndex = 5;
             this.checkBox1.Text = "Giơ tay hỗ trợ";
             this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // notifyIcon1
             // 
             this.notifyIcon1.Text = "notifyIcon1";
             this.notifyIcon1.Visible = true;
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(587, 11);
-            this.pictureBox3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(25, 35);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox3.TabIndex = 9;
-            this.pictureBox3.TabStop = false;
-            // 
-            // label5
-            // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.label5.Location = new System.Drawing.Point(617, 18);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(88, 21);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "Đã kết nối";
             // 
             // frmClientMain
             // 
@@ -233,18 +227,15 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "frmClientMain";
-            this.Opacity = 0D;
             this.ShowInTaskbar = false;
             this.Text = "Client";
-            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.pnlCard1.ResumeLayout(false);
             this.pnlCard1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.pnlCard2.ResumeLayout(false);
             this.pnlCard2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
