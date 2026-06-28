@@ -31,12 +31,16 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmServerMain));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmServerMain));
+
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.dgvClients = new System.Windows.Forms.DataGridView();
+            this.IP = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel8 = new System.Windows.Forms.Panel();
             this.panel9 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
@@ -67,6 +71,7 @@
             this.btnMsg = new System.Windows.Forms.Button();
             this.txtMessage = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.rtbLogs = new System.Windows.Forms.RichTextBox();
             this.panel7 = new System.Windows.Forms.Panel();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -76,10 +81,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.IP = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.rtbLogs = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -188,6 +189,37 @@
             this.dgvClients.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvClients_DataBindingComplete);
             this.dgvClients.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvClients_RowsAdded);
             this.dgvClients.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dgvClients_RowsRemoved);
+            this.dgvClients.SelectionChanged += new System.EventHandler(this.dgvClients_SelectionChanged);
+
+            // 
+            // IP
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.IP.DefaultCellStyle = dataGridViewCellStyle2;
+            this.IP.HeaderText = "IP";
+            this.IP.MinimumWidth = 6;
+            this.IP.Name = "IP";
+            this.IP.ReadOnly = true;
+            // 
+            // Column2
+            // 
+            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.Column2.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Column2.HeaderText = "Tên Máy";
+            this.Column2.MinimumWidth = 6;
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            // 
+            // colStatus
+            // 
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.colStatus.DefaultCellStyle = dataGridViewCellStyle4;
+            this.colStatus.HeaderText = "Trạng Thái";
+            this.colStatus.MinimumWidth = 6;
+            this.colStatus.Name = "colStatus";
+            this.colStatus.ReadOnly = true;
             // 
             // panel8
             // 
@@ -319,6 +351,7 @@
             this.btnCapture.TabIndex = 25;
             this.btnCapture.Text = "Chụp màn hình";
             this.btnCapture.UseVisualStyleBackColor = false;
+            this.btnCapture.Click += new System.EventHandler(this.btnCapture_Click);
             // 
             // picChupManHinh
             // 
@@ -377,6 +410,7 @@
             this.btnPull.TabIndex = 24;
             this.btnPull.Text = "Thu bài";
             this.btnPull.UseVisualStyleBackColor = false;
+            this.btnPull.Click += new System.EventHandler(this.btnPull_Click);
             // 
             // tableLayoutPanel2
             // 
@@ -393,6 +427,7 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(207, 108);
             this.tableLayoutPanel2.TabIndex = 0;
             this.tableLayoutPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel2_Paint);
+
             // 
             // picQuetMang
             // 
@@ -409,9 +444,9 @@
             // 
             // btnScan
             // 
-            this.btnScan.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnScan.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+              | System.Windows.Forms.AnchorStyles.Left)
+              | System.Windows.Forms.AnchorStyles.Right)));
             this.btnScan.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(115)))), ((int)(((byte)(22)))));
             this.btnScan.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnScan.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(115)))), ((int)(((byte)(22)))));
@@ -424,7 +459,7 @@
             this.btnScan.TabIndex = 22;
             this.btnScan.Text = "Quét mạng";
             this.btnScan.UseVisualStyleBackColor = false;
-            this.btnScan.Click += new System.EventHandler(this.btnScan_Click_1);
+            this.btnScan.Click += new System.EventHandler(this.btnScan_Click);
             // 
             // tableLayoutPanel3
             // 
@@ -440,6 +475,7 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 66.66666F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(207, 108);
             this.tableLayoutPanel3.TabIndex = 1;
+
             // 
             // picKhoaManHinh
             // 
@@ -456,8 +492,8 @@
             // 
             // btnLock
             // 
-            this.btnLock.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.btnLock.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLock.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(63)))), ((int)(((byte)(94)))));
             this.btnLock.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -470,6 +506,7 @@
             this.btnLock.TabIndex = 23;
             this.btnLock.Text = "Khóa màn hình";
             this.btnLock.UseVisualStyleBackColor = false;
+            this.btnLock.Click += new System.EventHandler(this.btnLock_Click);
             // 
             // panel5
             // 
@@ -589,6 +626,19 @@
             this.panel2.Size = new System.Drawing.Size(504, 413);
             this.panel2.TabIndex = 20;
             // 
+            // rtbLogs
+            // 
+            this.rtbLogs.BackColor = System.Drawing.Color.Black;
+            this.rtbLogs.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtbLogs.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbLogs.ForeColor = System.Drawing.Color.Lime;
+            this.rtbLogs.Location = new System.Drawing.Point(6, 39);
+            this.rtbLogs.Name = "rtbLogs";
+            this.rtbLogs.ReadOnly = true;
+            this.rtbLogs.Size = new System.Drawing.Size(495, 371);
+            this.rtbLogs.TabIndex = 21;
+            this.rtbLogs.Text = "";
+            // 
             // panel7
             // 
             this.panel7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
@@ -639,6 +689,7 @@
             this.pnlTopBar.Name = "pnlTopBar";
             this.pnlTopBar.Size = new System.Drawing.Size(1196, 50);
             this.pnlTopBar.TabIndex = 2;
+            this.pnlTopBar.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlTopBar_Paint);
             this.pnlTopBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlTopBar_MouseDown);
             this.pnlTopBar.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlTopBar_MouseMove);
             this.pnlTopBar.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlTopBar_MouseUp);
@@ -706,48 +757,6 @@
             this.label4.TabIndex = 3;
             this.label4.Text = "Lab Admin Server Dashboard";
             // 
-            // IP
-            // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.IP.DefaultCellStyle = dataGridViewCellStyle2;
-            this.IP.HeaderText = "IP";
-            this.IP.MinimumWidth = 6;
-            this.IP.Name = "IP";
-            this.IP.ReadOnly = true;
-            // 
-            // Column2
-            // 
-            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.Column2.DefaultCellStyle = dataGridViewCellStyle3;
-            this.Column2.HeaderText = "Tên Máy";
-            this.Column2.MinimumWidth = 6;
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            // 
-            // colStatus
-            // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.colStatus.DefaultCellStyle = dataGridViewCellStyle4;
-            this.colStatus.HeaderText = "Trạng Thái";
-            this.colStatus.MinimumWidth = 6;
-            this.colStatus.Name = "colStatus";
-            this.colStatus.ReadOnly = true;
-            // 
-            // rtbLogs
-            // 
-            this.rtbLogs.BackColor = System.Drawing.Color.Black;
-            this.rtbLogs.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.rtbLogs.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbLogs.ForeColor = System.Drawing.Color.Lime;
-            this.rtbLogs.Location = new System.Drawing.Point(6, 39);
-            this.rtbLogs.Name = "rtbLogs";
-            this.rtbLogs.ReadOnly = true;
-            this.rtbLogs.Size = new System.Drawing.Size(495, 371);
-            this.rtbLogs.TabIndex = 21;
-            this.rtbLogs.Text = "";
-            // 
             // frmServerMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -761,7 +770,7 @@
             this.Padding = new System.Windows.Forms.Padding(2);
             this.Text = "Server";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmServerMain_FormClosing);
-            this.Load += new System.EventHandler(this.Form2_Load);
+            this.Load += new System.EventHandler(this.FrmServer_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();

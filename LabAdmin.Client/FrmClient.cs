@@ -26,11 +26,17 @@ namespace LabAdmin.Client
 
         // Socket dùng để duy trì kết nối TCP liên tục với Server
         private Socket tcpSocket;
-
+        // Cờ để đảm bảo chỉ có 1 thread ReceiveCommand chạy tại một thời điểm
+        private readonly object sendLock = new object();   // tranh 2 nguon Send xen ke
+        private volatile bool isRunning = true;            // co dung toan bo luong nen
+        private volatile bool isReceiving = false;         // dang co 1 ReceiveCommand chay
         // Form khóa màn hình (Khai báo ở đây để dễ dàng gọi lệnh Mở/Khóa)
         private FrmScreenLocker frmLocker;
 
         // IP của Server. Mặc định là localhost, sẽ được cập nhật tự động khi Server bắn UDP quét mạng
+      
+        // [1 MÁY]: Để là "127.0.0.1"
+        // [2 MÁY]: Để là IP của máy Server (ví dụ: "192.168.1.5")
         private string serverIpAddress = "127.0.0.1";
 
         public frmClientMain()
@@ -39,281 +45,383 @@ namespace LabAdmin.Client
         }
 
         // =========================================================
-        // 2. SỰ KIỆN FORM LOAD (KHỞI ĐỘNG CLIENT)
+        // FORM LOAD
         // =========================================================
         private void frmClientMain_Load(object sender, EventArgs e)
         {
-            // --- CẤU HÌNH HIỂN THỊ FORM ---
-            // Đã chỉnh lại để Form hiện lên cho nhóm trưởng dễ test. 
-            // Khi nào nộp đồ án, chỉ cần đổi Opacity = 0, ShowInTaskbar = false là tàng hình trở lại.
+            // Che do test: hien form. Khi nop: Opacity=0, ShowInTaskbar=false
             this.Opacity = 1.0;
             this.ShowInTaskbar = true;
             this.WindowState = FormWindowState.Normal;
             this.Show();
 
-            // Bật biểu tượng nhỏ dưới góc phải màn hình (System Tray)
-            if (notifyIcon1 != null)
+            // Hien ten may + IP noi bo len card
+            try
             {
-                notifyIcon1.Visible = true;
+                lblClientName.Text = "PC: " + Environment.MachineName;
+                lblClientIPAddress.Text = "Địa chỉ IP: " + GetLocalIPv4();
             }
+            catch { }
 
-            // Ghi Registry để phần mềm tự khởi động cùng Windows
+            if (notifyIcon1 != null) notifyIcon1.Visible = true;
+
+            // Wire cac nut/o (Designer khong wire san)
+            if (btnSubmit != null) btnSubmit.Click += btnSubmit_Click;
+            if (btnRefresh != null) btnRefresh.Click += btnRefresh_Click;
+
             // SetStartup();
 
-            // Khởi chạy luồng UDP (Lắng nghe lệnh quét mạng từ Server)
-            udpThread = new Thread(ListenUdp);
-            udpThread.IsBackground = true; // IsBackground = true giúp Thread tự hủy khi tắt ứng dụng
+            udpThread = new Thread(ListenUDP) { IsBackground = true };
             udpThread.Start();
-
-            // Khởi chạy luồng TCP (Kết nối chính thức để nhận lệnh)
-            tcpThread = new Thread(ConnectTcp);
-            tcpThread.IsBackground = true;
+            tcpThread = new Thread(ConnectTcp) { IsBackground = true };
             tcpThread.Start();
+
+            this.FormClosing += FrmClientMain_FormClosing;
+
+            LogClient("Client đã khởi động. Đang chờ kết nối tới máy chủ...");
+        }
+        
+        private void FrmClientMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            isRunning = false;
+            CloseTcpSocket();
+        }
+
+        private string GetLocalIPv4()
+        {
+            try
+            {
+                foreach (var ip in Dns.GetHostAddresses(Dns.GetHostName()))
+                    if (ip.AddressFamily == AddressFamily.InterNetwork)
+                        return ip.ToString();
+            }
+            catch { }
+            return "127.0.0.1";
         }
 
         // =========================================================
-        // 3. HÀM TỰ KHỞI ĐỘNG CÙNG WINDOWS
+        // TU KHOI DONG CUNG WINDOWS
         // =========================================================
         private void SetStartup()
         {
             try
             {
-                // Can thiệp vào Registry của Windows để add file .exe hiện tại vào thư mục Run
-                RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-                rk.SetValue("LabAdminClient", Application.ExecutablePath);
+                using (RegistryKey rk = Registry.CurrentUser.OpenSubKey(
+                    "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
+                {
+                    if (rk != null) rk.SetValue("LabAdminClient", Application.ExecutablePath);
+                }
             }
-            catch
-            {
-                // Bỏ qua lỗi nếu máy tính sinh viên không cấp quyền ghi Registry
-            }
+            catch (Exception ex) { Debug.WriteLine("SetStartup loi: " + ex.Message); }
         }
 
         // =========================================================
-        // 4. LUỒNG UDP: LẮNG NGHE ĐIỂM DANH (CỔNG 8888)
+        // UDP: lang nghe diem danh
         // =========================================================
-        private void ListenUdp()
+        private void ListenUDP()
         {
-            // Khởi tạo Socket UDP
-            Socket sckUdp = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            sckUdp.Bind(new IPEndPoint(IPAddress.Any, 8888)); // Client mở cửa port 8888 chờ Server
-
-            byte[] buffer = new byte[1024];
-            EndPoint remoteEp = new IPEndPoint(IPAddress.Any, 0);
-
-            while (true)
+            try
             {
-                try
+                using (UdpClient udpClient = new UdpClient())
                 {
-                    // Hứng dữ liệu từ Server bắn tới
-                    int size = sckUdp.ReceiveFrom(buffer, ref remoteEp);
-                    string data = Encoding.UTF8.GetString(buffer, 0, size);
+                    udpClient.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+                    udpClient.Client.Bind(new IPEndPoint(IPAddress.Any, NetworkProtocol.UDP_SCAN_PORT));
 
-                    // Nếu gói tin nhận được đúng là mã lệnh Quét Mạng
-                    if (data == NetworkProtocol.CMD_SCAN)
+                    while (isRunning)
                     {
-                        // TRỌNG TÂM: Trích xuất IP của Server từ địa chỉ người gửi
-                        serverIpAddress = ((IPEndPoint)remoteEp).Address.ToString();
+                        try
+                        {
+                            IPEndPoint remoteEp = new IPEndPoint(IPAddress.Any, 0);
+                            byte[] data = udpClient.Receive(ref remoteEp);
+                            string command = Encoding.UTF8.GetString(data);
 
-                        // Lấy tên máy tính hiện tại của Client
-                        string machineName = Environment.MachineName;
-
-                        // Đóng gói dữ liệu phản hồi: Tên mã | Tên máy
-                        string replyData = NetworkProtocol.REP_SCAN_ACK + NetworkProtocol.DELIMITER + machineName;
-                        byte[] sendData = Encoding.UTF8.GetBytes(replyData);
-
-                        // Mở một Socket UDP tạm để bắn trả lại IP Server ở cổng 8090
-                        Socket replySocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-                        replySocket.SendTo(sendData, new IPEndPoint(IPAddress.Parse(serverIpAddress), 8090));
-                        replySocket.Close();
+                            if (command == NetworkProtocol.CMD_SCAN)
+                            {
+                                serverIpAddress = remoteEp.Address.ToString();
+                                byte[] reply = Encoding.UTF8.GetBytes(
+                                    NetworkProtocol.REP_SCAN_ACK + NetworkProtocol.DELIMITER + Environment.MachineName);
+                                udpClient.Send(reply, reply.Length,
+                                    new IPEndPoint(remoteEp.Address, NetworkProtocol.UDP_REPLY_PORT));
+                            }
+                        }
+                        catch (Exception ex) { Debug.WriteLine("UDP receive loi: " + ex.Message); }
                     }
                 }
-                catch { } // Bỏ qua lỗi mạng lặt vặt để vòng lặp không bị chết
             }
+            catch (Exception ex) { Debug.WriteLine("Mo UDP loi: " + ex.Message); }
         }
 
         // =========================================================
-        // 5. LUỒNG TCP: KẾT NỐI VÀ DUY TRÌ BỀN VỮNG (CỔNG 9090)
+        // TCP: ket noi + duy tri
         // =========================================================
         private void ConnectTcp()
         {
-            while (true)
+            while (isRunning)
             {
                 try
                 {
-                    // Nếu chưa kết nối hoặc kết nối bị rớt
-                    if (tcpSocket == null || !tcpSocket.Connected)
+                    if (!isReceiving)
                     {
-                        tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                        tcpSocket.Connect(new IPEndPoint(IPAddress.Parse(serverIpAddress), 9090));
+                        Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                        s.Connect(new IPEndPoint(IPAddress.Parse(serverIpAddress), NetworkProtocol.TCP_PORT));
+                        tcpSocket = s;
 
-                        // Nếu Connect thành công, đẩy việc nhận lệnh sang một Thread mới
-                        Thread receiveThread = new Thread(ReceiveCommand);
-                        receiveThread.IsBackground = true;
+                        isReceiving = true;
+                        Thread receiveThread = new Thread(ReceiveCommand) { IsBackground = true };
                         receiveThread.Start();
+
+                        LogClient("Đã kết nối tới máy chủ " + serverIpAddress);
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // Server chưa mở máy hoặc rớt mạng -> Ngủ 5 giây rồi thử kết nối lại (Auto Reconnect)
-                    Thread.Sleep(5000);
+                    Debug.WriteLine("Chua ket noi duoc Server: " + ex.Message);
+                    CloseTcpSocket();
+                    isReceiving = false;
                 }
+                Thread.Sleep(5000);
             }
         }
 
+        private void CloseTcpSocket()
+        {
+            try { tcpSocket?.Shutdown(SocketShutdown.Both); } catch { }
+            try { tcpSocket?.Close(); } catch { }
+            tcpSocket = null;
+        }
+
         // =========================================================
-        // 6. XỬ LÝ LỆNH TỪ SERVER (TÌM PHÂN MẢNH LỆNH)
+        // NHAN LENH (doc theo khung)
         // =========================================================
         private void ReceiveCommand()
         {
-            // Cấp phát bộ đệm 1MB, đủ an toàn cho việc nhận chuỗi lệnh
-            byte[] buffer = new byte[1024 * 1024];
-
-            while (true)
+            try
             {
-                try
+                while (isRunning)
                 {
-                    // Chặn tại đây cho đến khi có dữ liệu đổ về
-                    int size = tcpSocket.Receive(buffer);
-                    if (size == 0) // size = 0 nghĩa là Server đã ngắt kết nối
-                    {
-                        tcpSocket.Close();
+                    if (!NetworkProtocol.ReceiveFrame(tcpSocket, out byte type, out byte[] payload))
                         break;
-                    }
 
-                    // Giải mã gói tin thành chuỗi
-                    string commandStr = Encoding.UTF8.GetString(buffer, 0, size);
+                    if (type != NetworkProtocol.TYPE_TEXT) continue; // server chi gui lenh text
 
-                    // Cắt chuỗi dựa vào dấu phân cách (Delimiter: '|')
-                    string[] parts = commandStr.Split(NetworkProtocol.DELIMITER);
-                    string cmd = parts[0]; // Phần tử đầu tiên luôn là Mã lệnh
+                    string data = Encoding.UTF8.GetString(payload);
+                    string[] parts = data.Split(NetworkProtocol.DELIMITER);
+                    if (parts.Length == 0) continue;
 
-                    // Điều hướng xử lý dựa trên Mã lệnh
+                    string cmd = parts[0];
+                    Debug.WriteLine("Lenh: " + cmd);
+
                     switch (cmd)
                     {
+                        case NetworkProtocol.CMD_MSG:
+                            string msg = parts.Length >= 2
+                                ? string.Join(NetworkProtocol.DELIMITER.ToString(), parts, 1, parts.Length - 1)
+                                : string.Empty;
+                            LogClient("Thông báo từ GV: " + msg);
+                            this.Invoke(new Action(() => MessageBox.Show(msg, "Thông báo từ Giảng Viên",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information)));
+                            break;
+
                         case NetworkProtocol.CMD_LOCK:
-                            // Dùng Invoke để đẩy việc cập nhật giao diện (UI) về luồng chính, tránh lỗi Cross-thread
-                            this.Invoke(new Action(() => {
+                            this.Invoke(new Action(() =>
+                            {
                                 if (frmLocker == null || frmLocker.IsDisposed)
+                                {
                                     frmLocker = new FrmScreenLocker();
+                                    // Truyen ten may + IP de hien len man hinh khoa
+                                    frmLocker.ClientInfo = $"{Environment.MachineName}  ·  {GetLocalIPv4()}";
+                                }
                                 frmLocker.Show();
+                                frmLocker.BringToFront();
                             }));
+                            LogClient("Máy đã bị KHÓA bởi giảng viên.");
                             break;
 
                         case NetworkProtocol.CMD_UNLOCK:
-                            this.Invoke(new Action(() => {
-                                if (frmLocker != null && !frmLocker.IsDisposed)
-                                    frmLocker.Hide();
-                            }));
-                            break;
-
-                        case NetworkProtocol.CMD_SHUTDOWN:
-                            // Gọi CMD của hệ thống để ép tắt máy ngay lập tức (thời gian = 0)
-                            Process.Start("shutdown", "-s -t 0");
-                            break;
-
-                        case NetworkProtocol.CMD_MSG:
-                            // Nếu gói tin có chứa nội dung thông báo đi kèm
-                            if (parts.Length > 1)
+                            this.Invoke(new Action(() =>
                             {
-                                string msgContent = parts[1];
-                                this.Invoke(new Action(() => {
-                                    // Lấy giờ hiện tại để khung thông báo trông chuyên nghiệp hơn
-                                    string time = DateTime.Now.ToString("HH:mm:ss");
-
-                                    // Đổ text vào khung Thông báo từ máy chủ (rtbLogsClient)
-                                    rtbLogsClient.AppendText($"[{time}] Giáo viên: {msgContent}\n");
-
-                                    // Tự động cuộn xuống dòng mới nhất
-                                    rtbLogsClient.ScrollToCaret();
-                                }));
-                            }
-                            break;
-
-                        case NetworkProtocol.CMD_PULL:
-                            // Chạy hàm Thu bài (Nén Zip)
-                            HandlePullCommand();
+                                if (frmLocker != null && !frmLocker.IsDisposed) frmLocker.ForceUnlock();
+                            }));
+                            LogClient("Máy đã được MỞ KHÓA.");
                             break;
 
                         case NetworkProtocol.CMD_CAPTURE:
-                            // Chạy hàm Chụp màn hình
                             HandleCaptureCommand();
+                            break;
+
+                        case NetworkProtocol.CMD_PULL:
+                            HandlePullCommand();
+                            break;
+
+                        case NetworkProtocol.CMD_SHUTDOWN:
+                            try { Process.Start("shutdown", "/s /t 0"); }
+                            catch (Exception ex) { Debug.WriteLine("shutdown loi: " + ex.Message); }
+                            break;
+
+                        case NetworkProtocol.CMD_RESTART:
+                            try { Process.Start("shutdown", "/r /t 0"); }
+                            catch (Exception ex) { Debug.WriteLine("restart loi: " + ex.Message); }
                             break;
                     }
                 }
-                catch
-                {
-                    // Lỗi mạng đứt ngang -> Đóng socket, thoát vòng lặp để Thread ConnectTCP bên trên tự động kết nối lại
-                    tcpSocket.Close();
-                    break;
-                }
+            }
+            catch (Exception ex) { Debug.WriteLine("Loi Receive: " + ex.Message); }
+            finally
+            {
+                CloseTcpSocket();
+                isReceiving = false;
+                LogClient("Mất kết nối tới máy chủ. Sẽ tự kết nối lại...");
             }
         }
-
         // =========================================================
-        // 7. XỬ LÝ DỮ LIỆU NẶNG: NÉN ZIP VÀ GỬI BÀI
+        // THU BAI (nen zip thu muc lam bai + gui)
         // =========================================================
         private void HandlePullCommand()
         {
             try
             {
-                // Thư mục sinh viên làm bài (Cần đảm bảo thư mục này luôn tồn tại trên máy trạm)
                 string sourceDir = @"D:\BaiLam";
-                // Thư mục tạm để chứa file zip trước khi gửi
                 string tempDir = @"D:\Temp";
                 string zipFilePath = Path.Combine(tempDir, "NopBai.zip");
 
-                // Tạo thư mục tạm nếu chưa có
-                if (!Directory.Exists(tempDir))
-                    Directory.CreateDirectory(tempDir);
-
-                // Xóa file bài cũ (nếu có) để không bị đè dữ liệu
-                if (File.Exists(zipFilePath))
-                    File.Delete(zipFilePath);
+                if (!Directory.Exists(tempDir)) Directory.CreateDirectory(tempDir);
+                if (File.Exists(zipFilePath)) File.Delete(zipFilePath);
 
                 if (Directory.Exists(sourceDir))
                 {
-                    // Nén toàn bộ thư mục D:\BaiLam thành 1 file .zip duy nhất
                     ZipFile.CreateFromDirectory(sourceDir, zipFilePath);
-
-                    // Đọc file .zip thành mảng Byte và bắn thẳng lên Server qua TCP
-                    byte[] fileBytes = File.ReadAllBytes(zipFilePath);
-                    tcpSocket.Send(fileBytes);
+                    SendFrame(NetworkProtocol.TYPE_ZIP, File.ReadAllBytes(zipFilePath));
+                    LogClient("Đã nộp bài theo yêu cầu của giảng viên.");
+                }
+                else
+                {
+                    LogClient("Không tìm thấy thư mục bài làm: " + sourceDir);
                 }
             }
-            catch { }
+            catch (Exception ex) { Debug.WriteLine("HandlePull loi: " + ex.Message); }
         }
 
         // =========================================================
-        // 8. XỬ LÝ DỮ LIỆU NẶNG: CHỤP ẢNH MÀN HÌNH (SPY)
+        // CHUP MAN HINH
         // =========================================================
         private void HandleCaptureCommand()
         {
             try
             {
-                // Lấy kích thước màn hình thực tế của Client
                 Rectangle bounds = Screen.PrimaryScreen.Bounds;
-
-                // Khởi tạo một bức ảnh trống (Bitmap) với kích thước vừa lấy
                 using (Bitmap bitmap = new Bitmap(bounds.Width, bounds.Height))
                 {
-                    // Dùng Graphics để "vẽ" lại những gì đang hiển thị trên màn hình vào Bitmap
                     using (Graphics g = Graphics.FromImage(bitmap))
-                    {
                         g.CopyFromScreen(Point.Empty, Point.Empty, bounds.Size);
-                    }
-
-                    // Chuyển ảnh thành mảng Byte chuẩn JPEG để giảm dung lượng mạng
                     using (MemoryStream ms = new MemoryStream())
                     {
                         bitmap.Save(ms, ImageFormat.Jpeg);
-                        byte[] imageBytes = ms.ToArray();
-
-                        // Bắn mảng Byte ảnh lên Server
-                        tcpSocket.Send(imageBytes);
+                        SendFrame(NetworkProtocol.TYPE_IMAGE, ms.ToArray());
                     }
                 }
             }
-            catch { }
+            catch (Exception ex) { Debug.WriteLine("HandleCapture loi: " + ex.Message); }
+        }
+
+
+        // Gui 1 khung [type][length][payload], khoa de khong xen ke
+        private void SendFrame(byte type, byte[] data)
+        {
+            byte[] frame = NetworkProtocol.BuildFrame(type, data);
+            lock (sendLock)
+            {
+                Socket s = tcpSocket;
+                if (s != null && s.Connected) s.Send(frame);
+            }
+        }
+
+
+        // =========================================================
+        // NUT: NOP BAI THU CONG (chon file/thu muc -> zip -> gui)
+        // =========================================================
+        private void btnSubmit_Click(object sender, EventArgs e)
+        {
+            if (tcpSocket == null || !tcpSocket.Connected)
+            {
+                MessageBox.Show("Chưa kết nối tới máy chủ, không thể nộp bài.", "Chú ý",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                ofd.Title = "Chọn file bài làm để nộp";
+                ofd.Multiselect = true;
+                if (ofd.ShowDialog() != DialogResult.OK) return;
+
+                try
+                {
+                    string tempDir = Path.Combine(Path.GetTempPath(), "LabAdminSubmit");
+                    if (Directory.Exists(tempDir)) Directory.Delete(tempDir, true);
+                    Directory.CreateDirectory(tempDir);
+
+                    foreach (string f in ofd.FileNames)
+                        File.Copy(f, Path.Combine(tempDir, Path.GetFileName(f)), true);
+
+                    string zipPath = Path.Combine(Path.GetTempPath(), "NopBai_Manual.zip");
+                    if (File.Exists(zipPath)) File.Delete(zipPath);
+                    ZipFile.CreateFromDirectory(tempDir, zipPath);
+
+                    SendFrame(NetworkProtocol.TYPE_ZIP, File.ReadAllBytes(zipPath));
+                    LogClient($"Đã nộp {ofd.FileNames.Length} file lên máy chủ.");
+                    MessageBox.Show("Đã nộp bài thành công!", "Thành công",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    LogClient("Lỗi nộp bài: " + ex.Message);
+                    MessageBox.Show("Lỗi nộp bài: " + ex.Message, "Lỗi",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+
+        // Nut refresh: hien lai ten may/IP + trang thai ket noi
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            lblClientName.Text = "PC: " + Environment.MachineName;
+            lblClientIPAddress.Text = "Địa chỉ IP: " + GetLocalIPv4();
+            bool connected = tcpSocket != null && tcpSocket.Connected;
+            LogClient(connected ? "Trạng thái: Đã kết nối máy chủ." : "Trạng thái: Chưa kết nối.");
+        }
+
+        // Checkbox: gio tay ho tro -> bao len server
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            bool on = checkBox1.Checked;
+            try
+            {
+                string payload = NetworkProtocol.REP_HELP + NetworkProtocol.DELIMITER
+                                 + Environment.MachineName + NetworkProtocol.DELIMITER + (on ? "1" : "0");
+                SendFrame(NetworkProtocol.TYPE_TEXT, Encoding.UTF8.GetBytes(payload));
+                LogClient(on ? "Đã giơ tay xin hỗ trợ." : "Đã hạ tay.");
+            }
+            catch (Exception ex) { Debug.WriteLine("Help loi: " + ex.Message); }
+        }
+
+        // Ghi log ra rtbLogsClient (an toan cross-thread)
+        private void LogClient(string message)
+        {
+            if (rtbLogsClient == null) return;
+            if (rtbLogsClient.InvokeRequired)
+            {
+                rtbLogsClient.Invoke(new Action<string>(LogClient), message);
+                return;
+            }
+            rtbLogsClient.AppendText($"[{DateTime.Now:HH:mm:ss}] {message}\n");
+            rtbLogsClient.ScrollToCaret();
+        }
+        private void panel1_Paint(object sender, PaintEventArgs e) { }
+
+        private void panel1_Paint_1(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

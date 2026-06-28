@@ -1,4 +1,8 @@
-﻿namespace LabAdmin.Client
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace LabAdmin.Client
 {
     partial class frmClientMain
     {
@@ -19,7 +23,47 @@
             }
             base.Dispose(disposing);
         }
+        protected override void WndProc(ref Message m)
+        {
+            const int WM_NCHITTEST = 0x0084;
 
+            // Các hằng số đại diện cho các vị trí viền và góc của Form
+            const int HTLEFT = 10;
+            const int HTRIGHT = 11;
+            const int HTTOP = 12;
+            const int HTTOPLEFT = 13;
+            const int HTTOPRIGHT = 14;
+            const int HTBOTTOM = 15;
+            const int HTBOTTOMLEFT = 16;
+            const int HTBOTTOMRIGHT = 17;
+
+            base.WndProc(ref m);
+
+            // Bắt sự kiện khi chuột di chuyển trên Form
+            if (m.Msg == WM_NCHITTEST)
+            {
+                int resizeAreaSize = 10; // Độ rộng của vùng có thể kéo (tính bằng pixel)
+                Point cursor = this.PointToClient(Cursor.Position);
+
+                // Kiểm tra xem chuột đang ở góc hay cạnh nào để đổi con trỏ chuột tương ứng
+                if (cursor.X <= resizeAreaSize && cursor.Y <= resizeAreaSize)
+                    m.Result = (IntPtr)HTTOPLEFT;
+                else if (cursor.X >= this.ClientSize.Width - resizeAreaSize && cursor.Y <= resizeAreaSize)
+                    m.Result = (IntPtr)HTTOPRIGHT;
+                else if (cursor.X <= resizeAreaSize && cursor.Y >= this.ClientSize.Height - resizeAreaSize)
+                    m.Result = (IntPtr)HTBOTTOMLEFT;
+                else if (cursor.X >= this.ClientSize.Width - resizeAreaSize && cursor.Y >= this.ClientSize.Height - resizeAreaSize)
+                    m.Result = (IntPtr)HTBOTTOMRIGHT;
+                else if (cursor.X <= resizeAreaSize)
+                    m.Result = (IntPtr)HTLEFT;
+                else if (cursor.X >= this.ClientSize.Width - resizeAreaSize)
+                    m.Result = (IntPtr)HTRIGHT;
+                else if (cursor.Y <= resizeAreaSize)
+                    m.Result = (IntPtr)HTTOP;
+                else if (cursor.Y >= this.ClientSize.Height - resizeAreaSize)
+                    m.Result = (IntPtr)HTBOTTOM;
+            }
+        }
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -52,187 +96,121 @@
             // 
             // panel1
             // 
+            resources.ApplyResources(this.panel1, "panel1");
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(40)))));
             this.panel1.Controls.Add(this.btnRefresh);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(708, 68);
-            this.panel1.TabIndex = 0;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint_1);
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // btnRefresh
             // 
+            resources.ApplyResources(this.btnRefresh, "btnRefresh");
             this.btnRefresh.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnRefresh.FlatAppearance.BorderSize = 0;
             this.btnRefresh.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
-            this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRefresh.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRefresh.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnRefresh.Location = new System.Drawing.Point(610, 15);
-            this.btnRefresh.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(44, 40);
-            this.btnRefresh.TabIndex = 1;
-            this.btnRefresh.Text = "↺";
             this.btnRefresh.UseVisualStyleBackColor = false;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            resources.ApplyResources(this.label1, "label1");
             this.label1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label1.Location = new System.Drawing.Point(37, 15);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(353, 37);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Bảng điều khiển máy trạm";
             // 
             // pnlCard1
             // 
+            resources.ApplyResources(this.pnlCard1, "pnlCard1");
             this.pnlCard1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(40)))));
             this.pnlCard1.Controls.Add(this.pictureBox3);
             this.pnlCard1.Controls.Add(this.label5);
             this.pnlCard1.Controls.Add(this.lblClientIPAddress);
             this.pnlCard1.Controls.Add(this.lblClientName);
-            this.pnlCard1.Location = new System.Drawing.Point(28, 107);
-            this.pnlCard1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnlCard1.Name = "pnlCard1";
-            this.pnlCard1.Size = new System.Drawing.Size(645, 108);
-            this.pnlCard1.TabIndex = 1;
             // 
             // pictureBox3
             // 
+            resources.ApplyResources(this.pictureBox3, "pictureBox3");
             this.pictureBox3.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(522, 9);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(22, 28);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox3.TabIndex = 9;
             this.pictureBox3.TabStop = false;
             // 
             // label5
             // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            resources.ApplyResources(this.label5, "label5");
             this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.label5.Location = new System.Drawing.Point(548, 14);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(72, 17);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "Đã kết nối";
             // 
             // lblClientIPAddress
             // 
-            this.lblClientIPAddress.AutoSize = true;
-            this.lblClientIPAddress.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblClientIPAddress.Location = new System.Drawing.Point(26, 63);
+            resources.ApplyResources(this.lblClientIPAddress, "lblClientIPAddress");
             this.lblClientIPAddress.Name = "lblClientIPAddress";
-            this.lblClientIPAddress.Size = new System.Drawing.Size(175, 32);
-            this.lblClientIPAddress.TabIndex = 1;
-            this.lblClientIPAddress.Text = "Địa chỉ IP: ..........";
             // 
             // lblClientName
             // 
-            this.lblClientName.AutoSize = true;
-            this.lblClientName.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblClientName.Location = new System.Drawing.Point(26, 14);
+            resources.ApplyResources(this.lblClientName, "lblClientName");
             this.lblClientName.Name = "lblClientName";
-            this.lblClientName.Size = new System.Drawing.Size(107, 32);
-            this.lblClientName.TabIndex = 0;
-            this.lblClientName.Text = "PC: .......";
             // 
             // pnlCard2
             // 
+            resources.ApplyResources(this.pnlCard2, "pnlCard2");
             this.pnlCard2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(40)))));
             this.pnlCard2.Controls.Add(this.rtbLogsClient);
             this.pnlCard2.Controls.Add(this.label2);
-            this.pnlCard2.Location = new System.Drawing.Point(28, 248);
-            this.pnlCard2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnlCard2.Name = "pnlCard2";
-            this.pnlCard2.Size = new System.Drawing.Size(645, 193);
-            this.pnlCard2.TabIndex = 2;
             // 
             // rtbLogsClient
             // 
+            resources.ApplyResources(this.rtbLogsClient, "rtbLogsClient");
             this.rtbLogsClient.BackColor = System.Drawing.Color.White;
             this.rtbLogsClient.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.rtbLogsClient.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtbLogsClient.ForeColor = System.Drawing.SystemColors.InfoText;
-            this.rtbLogsClient.Location = new System.Drawing.Point(32, 50);
             this.rtbLogsClient.Name = "rtbLogsClient";
             this.rtbLogsClient.ReadOnly = true;
-            this.rtbLogsClient.Size = new System.Drawing.Size(578, 129);
-            this.rtbLogsClient.TabIndex = 22;
-            this.rtbLogsClient.Text = "";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            resources.ApplyResources(this.label2, "label2");
             this.label2.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label2.Location = new System.Drawing.Point(26, 7);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(264, 32);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Thông báo từ máy chủ ";
             // 
             // btnSubmit
             // 
+            resources.ApplyResources(this.btnSubmit, "btnSubmit");
             this.btnSubmit.BackColor = System.Drawing.Color.DimGray;
             this.btnSubmit.FlatAppearance.BorderSize = 0;
-            this.btnSubmit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSubmit.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSubmit.ForeColor = System.Drawing.Color.Black;
-            this.btnSubmit.Location = new System.Drawing.Point(60, 458);
-            this.btnSubmit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSubmit.Name = "btnSubmit";
-            this.btnSubmit.Size = new System.Drawing.Size(220, 30);
-            this.btnSubmit.TabIndex = 3;
-            this.btnSubmit.Text = "Chọn File Và Nộp Bài";
             this.btnSubmit.UseVisualStyleBackColor = false;
             // 
             // checkBox1
             // 
-            this.checkBox1.AutoSize = true;
+            resources.ApplyResources(this.checkBox1, "checkBox1");
             this.checkBox1.FlatAppearance.BorderSize = 0;
             this.checkBox1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lime;
-            this.checkBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBox1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox1.Location = new System.Drawing.Point(462, 462);
-            this.checkBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(152, 32);
-            this.checkBox1.TabIndex = 5;
-            this.checkBox1.Text = "Giơ tay hỗ trợ";
             this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // notifyIcon1
             // 
-            this.notifyIcon1.Text = "notifyIcon1";
-            this.notifyIcon1.Visible = true;
+            resources.ApplyResources(this.notifyIcon1, "notifyIcon1");
             // 
             // frmClientMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(24)))), ((int)(((byte)(33)))));
-            this.ClientSize = new System.Drawing.Size(708, 509);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.btnSubmit);
             this.Controls.Add(this.pnlCard2);
             this.Controls.Add(this.pnlCard1);
             this.Controls.Add(this.panel1);
             this.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmClientMain";
             this.ShowInTaskbar = false;
-            this.Text = "Client";
             this.Load += new System.EventHandler(this.frmClientMain_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
