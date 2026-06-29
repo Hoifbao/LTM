@@ -48,9 +48,6 @@ namespace LabAdmin.Server
         // =========================================================
         // DONG SERVER
         // =========================================================
-        // =========================================================
-        // DONG SERVER
-        // =========================================================
         private void frmServerMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             DialogResult result = MessageBox.Show(
@@ -121,6 +118,7 @@ namespace LabAdmin.Server
             catch (Exception ex) { MessageBox.Show("Lỗi quét mạng: " + ex.Message); }
         }
 
+
         // =========================================================
         // UDP: hung phan hoi diem danh
         // =========================================================
@@ -152,6 +150,7 @@ namespace LabAdmin.Server
             catch (Exception ex) { System.Diagnostics.Debug.WriteLine("Mo UDP: " + ex.Message); }
         }
 
+
         // =========================================================
         // TCP: accept ket noi
         // =========================================================
@@ -167,12 +166,21 @@ namespace LabAdmin.Server
                     // Bat KeepAlive: phat hien mat ket noi sau ~20s thay vi bi dong im lang
                     client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
                     string ip = ((IPEndPoint)client.RemoteEndPoint).Address.ToString();
+
+                    // Bo qua ket noi tu loopback khi dang debug tren cung may
+                    if (ip == "127.0.0.1" || ip == "::1")
+                    {
+                        LogMessage($"⚠ Bỏ qua kết nối loopback ({ip}) - chạy server và client cùng máy.", Color.Gray);
+                        try { client.Close(); } catch { }
+                        continue;
+                    }
                     lock (clientList)
                     {
                         if (clientList.TryGetValue(ip, out Socket old)) { try { old.Close(); } catch { } }
                         clientList[ip] = client;
                     }
-                    AddOrUpdateClient(ip, "Máy trạm", NetworkProtocol.STATUS_ONLINE);
+                    // Ten may se duoc cap nhat khi nhan REP_SCAN_ACK tu client
+                    AddOrUpdateClient(ip, ip, NetworkProtocol.STATUS_ONLINE);
                     Task.Run(() => ReceiveData(client, ip));
                 }
             }
@@ -219,16 +227,51 @@ namespace LabAdmin.Server
             string[] parts = text.Split(NetworkProtocol.DELIMITER);
             if (parts.Length == 0) return;
 
-            if (parts[0] == NetworkProtocol.REP_HELP && parts.Length >= 3)
+            if (parts[0] == NetworkProtocol.REP_SCAN_ACK && parts.Length >= 2)
+            {
+                // Client gui ten may ngay khi TCP ket noi -> cap nhat grid
+                string machineName = parts[1];
+                AddOrUpdateClient(ip, machineName, NetworkProtocol.STATUS_ONLINE);
+                LogMessage($"🖥 {machineName} ({ip}) đã kết nối.", Color.Cyan);
+            }
+            else if (parts[0] == NetworkProtocol.REP_HELP && parts.Length >= 3)
             {
                 string name = parts[1];
                 bool on = parts[2] == "1";
-                LogMessage(on ? $"✋ {name} ({ip}) GIƠ TAY xin hỗ trợ!" : $"{name} ({ip}) đã hạ tay.",
+                // Cap nhat bieu tuong tren grid de giang vien biet may nao giơ tay
+                UpdateHelpStatus(ip, on);
+                LogMessage(on ? $"✋ {name} ({ip}) GIƠ TAY xin hỗ trợ!" : $"✔ {name} ({ip}) đã hạ tay.",
                            on ? Color.Yellow : Color.Gray);
             }
             else
             {
-                LogMessage($"[{ip}] {text}");
+                System.Diagnostics.Debug.WriteLine($"[{ip}] {text}");
+            }
+        }
+
+        // Cap nhat trang thai gió tay tren cot "Trang Thai" cua grid
+        private void UpdateHelpStatus(string ip, bool isRaisingHand)
+        {
+            if (this.InvokeRequired) { this.Invoke(new Action<string, bool>(UpdateHelpStatus), ip, isRaisingHand); return; }
+
+            foreach (DataGridViewRow row in dgvClients.Rows)
+            {
+                if (row.IsNewRow) continue;
+                if (row.Cells["IP"].Value?.ToString() != ip) continue;
+
+                string currentStatus = row.Cells["colStatus"].Value?.ToString() ?? "";
+                if (isRaisingHand)
+                {
+                    // Them bieu tuong giơ tay vao trang thai neu chua co
+                    if (!currentStatus.Contains("✋"))
+                        row.Cells["colStatus"].Value = "✋ " + currentStatus;
+                }
+                else
+                {
+                    // Xoa bieu tuong giơ tay
+                    row.Cells["colStatus"].Value = currentStatus.Replace("✋ ", "").Replace("✋", "").Trim();
+                }
+                break;
             }
         }
 
@@ -285,6 +328,9 @@ namespace LabAdmin.Server
             }
             catch (Exception ex) { LogMessage($"Lỗi xử lý ảnh từ {ip}: {ex.Message}", Color.Red); }
         }
+
+
+
 
         // =========================================================
         // GUI LENH (dong khung text)
@@ -416,6 +462,7 @@ namespace LabAdmin.Server
             else LogMessage($"Lỗi gửi lệnh chụp tới {targetIP}: {err}", Color.Red);
         }
 
+
         // =========================================================
         // KEO FORM + UI
         // =========================================================
@@ -499,6 +546,7 @@ namespace LabAdmin.Server
         }
         private void LogToConsole(string message) => LogMessage(message);
 
+
         private void dgvClients_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e) => UpdateTotalClients();
         private void dgvClients_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e) => UpdateTotalClients();
         private void dgvClients_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e) => UpdateTotalClients();
@@ -527,6 +575,7 @@ namespace LabAdmin.Server
         private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e) { }
         private void btnScan_Click_1(object sender, EventArgs e) { }
         private void pnlTopBar_Paint(object sender, PaintEventArgs e) { }
+
     }
 }
 

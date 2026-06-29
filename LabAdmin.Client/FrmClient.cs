@@ -170,6 +170,13 @@ namespace LabAdmin.Client
                         Thread receiveThread = new Thread(ReceiveCommand) { IsBackground = true };
                         receiveThread.Start();
 
+                        // Gui ten may len server ngay khi TCP ket noi thanh cong
+                        // Server se cap nhat cot "Ten May" tren grid chinh xac
+                        string hello = NetworkProtocol.REP_SCAN_ACK
+                                       + NetworkProtocol.DELIMITER
+                                       + Environment.MachineName;
+                        SendFrame(NetworkProtocol.TYPE_TEXT, System.Text.Encoding.UTF8.GetBytes(hello));
+
                         LogClient("Đã kết nối tới máy chủ " + serverIpAddress);
                     }
                 }
@@ -190,6 +197,7 @@ namespace LabAdmin.Client
             tcpSocket = null;
         }
 
+
         // =========================================================
         // NHAN LENH (doc theo khung)
         // =========================================================
@@ -201,16 +209,12 @@ namespace LabAdmin.Client
                 {
                     if (!NetworkProtocol.ReceiveFrame(tcpSocket, out byte type, out byte[] payload))
                         break;
-
                     if (type != NetworkProtocol.TYPE_TEXT) continue; // server chi gui lenh text
-
                     string data = Encoding.UTF8.GetString(payload);
                     string[] parts = data.Split(NetworkProtocol.DELIMITER);
                     if (parts.Length == 0) continue;
-
                     string cmd = parts[0];
                     Debug.WriteLine("Lenh: " + cmd);
-
                     switch (cmd)
                     {
                         case NetworkProtocol.CMD_MSG:
@@ -221,7 +225,6 @@ namespace LabAdmin.Client
                             this.Invoke(new Action(() => MessageBox.Show(msg, "Thông báo từ Giảng Viên",
                                 MessageBoxButtons.OK, MessageBoxIcon.Information)));
                             break;
-
                         case NetworkProtocol.CMD_LOCK:
                             this.Invoke(new Action(() =>
                             {
@@ -273,6 +276,7 @@ namespace LabAdmin.Client
                 LogClient("Mất kết nối tới máy chủ. Sẽ tự kết nối lại...");
             }
         }
+
         // =========================================================
         // THU BAI (nen zip thu muc lam bai + gui)
         // =========================================================
@@ -283,10 +287,8 @@ namespace LabAdmin.Client
                 string sourceDir = @"D:\BaiLam";
                 string tempDir = @"D:\Temp";
                 string zipFilePath = Path.Combine(tempDir, "NopBai.zip");
-
                 if (!Directory.Exists(tempDir)) Directory.CreateDirectory(tempDir);
                 if (File.Exists(zipFilePath)) File.Delete(zipFilePath);
-
                 if (Directory.Exists(sourceDir))
                 {
                     ZipFile.CreateFromDirectory(sourceDir, zipFilePath);
@@ -382,6 +384,7 @@ namespace LabAdmin.Client
         }
 
 
+
         // Nut refresh: hien lai ten may/IP + trang thai ket noi
         private void btnRefresh_Click(object sender, EventArgs e)
         {
@@ -395,15 +398,32 @@ namespace LabAdmin.Client
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             bool on = checkBox1.Checked;
+
+            // Kiem tra ket noi TCP truoc khi gui
+            if (tcpSocket == null || !tcpSocket.Connected)
+            {
+                LogClient("⚠ Chưa kết nối tới máy chủ, không thể gửi tín hiệu giơ tay.");
+                // Dat lai checkbox ve trang thai cu de tranh nham
+                checkBox1.CheckedChanged -= checkBox1_CheckedChanged;
+                checkBox1.Checked = !on;
+                checkBox1.CheckedChanged += checkBox1_CheckedChanged;
+                return;
+            }
+
             try
             {
                 string payload = NetworkProtocol.REP_HELP + NetworkProtocol.DELIMITER
                                  + Environment.MachineName + NetworkProtocol.DELIMITER + (on ? "1" : "0");
                 SendFrame(NetworkProtocol.TYPE_TEXT, Encoding.UTF8.GetBytes(payload));
-                LogClient(on ? "Đã giơ tay xin hỗ trợ." : "Đã hạ tay.");
+                LogClient(on ? "✋ Đã giơ tay xin hỗ trợ." : "✔ Đã hạ tay.");
             }
-            catch (Exception ex) { Debug.WriteLine("Help loi: " + ex.Message); }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Help loi: " + ex.Message);
+                LogClient("⚠ Lỗi gửi tín hiệu giơ tay: " + ex.Message);
+            }
         }
+
 
         // Ghi log ra rtbLogsClient (an toan cross-thread)
         private void LogClient(string message)
