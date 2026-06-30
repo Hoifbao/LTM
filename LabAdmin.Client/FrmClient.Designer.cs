@@ -59,7 +59,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(708, 68);
+            this.panel1.Size = new System.Drawing.Size(743, 68);
             this.panel1.TabIndex = 0;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint_1);
             // 
@@ -71,7 +71,7 @@
             this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRefresh.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRefresh.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnRefresh.Location = new System.Drawing.Point(610, 15);
+            this.btnRefresh.Location = new System.Drawing.Point(673, 15);
             this.btnRefresh.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(44, 40);
@@ -97,7 +97,7 @@
             this.pnlCard1.Controls.Add(this.label5);
             this.pnlCard1.Controls.Add(this.lblClientIPAddress);
             this.pnlCard1.Controls.Add(this.lblClientName);
-            this.pnlCard1.Location = new System.Drawing.Point(28, 107);
+            this.pnlCard1.Location = new System.Drawing.Point(44, 108);
             this.pnlCard1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnlCard1.Name = "pnlCard1";
             this.pnlCard1.Size = new System.Drawing.Size(645, 108);
@@ -152,7 +152,7 @@
             this.pnlCard2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(40)))));
             this.pnlCard2.Controls.Add(this.rtbLogsClient);
             this.pnlCard2.Controls.Add(this.label2);
-            this.pnlCard2.Location = new System.Drawing.Point(28, 248);
+            this.pnlCard2.Location = new System.Drawing.Point(44, 248);
             this.pnlCard2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnlCard2.Name = "pnlCard2";
             this.pnlCard2.Size = new System.Drawing.Size(645, 193);
@@ -174,13 +174,13 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label2.Location = new System.Drawing.Point(26, 7);
+            this.label2.Location = new System.Drawing.Point(26, 16);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(264, 32);
+            this.label2.Size = new System.Drawing.Size(288, 31);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Thông báo từ máy chủ ";
+            this.label2.Text = "THÔNG BÁO TỪ MÁY CHỦ ";
             // 
             // btnSubmit
             // 
@@ -189,7 +189,7 @@
             this.btnSubmit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSubmit.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSubmit.ForeColor = System.Drawing.Color.Black;
-            this.btnSubmit.Location = new System.Drawing.Point(60, 458);
+            this.btnSubmit.Location = new System.Drawing.Point(76, 462);
             this.btnSubmit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(220, 30);
@@ -204,7 +204,7 @@
             this.checkBox1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lime;
             this.checkBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkBox1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox1.Location = new System.Drawing.Point(462, 462);
+            this.checkBox1.Location = new System.Drawing.Point(502, 462);
             this.checkBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(152, 32);
@@ -223,7 +223,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(24)))), ((int)(((byte)(33)))));
-            this.ClientSize = new System.Drawing.Size(708, 509);
+            this.ClientSize = new System.Drawing.Size(743, 531);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.btnSubmit);
             this.Controls.Add(this.pnlCard2);
