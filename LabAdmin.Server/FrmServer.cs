@@ -281,11 +281,16 @@ namespace LabAdmin.Server
             {
                 string baseFolder = string.IsNullOrEmpty(SaveFolderPath)
                     ? Path.Combine(Application.StartupPath, "ThuBai") : SaveFolderPath;
+
+                // --- THÊM DÒNG NÀY ĐỂ DEBUG ---
+                LogMessage($"DEBUG: Đang lưu vào {baseFolder}");
+
                 string folderPath = Path.Combine(baseFolder, ip);
                 if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
+
                 string filePath = Path.Combine(folderPath, "BaiLam_" + DateTime.Now.ToString("HHmmss") + ".zip");
                 File.WriteAllBytes(filePath, data);
-                LogMessage($"Đã thu bài từ {ip} ({data.Length / 1024} KB).", Color.Lime);
+                LogMessage($"Đã thu bài từ {ip} tại {filePath}.", Color.Lime);
             }
             catch (Exception ex) { LogMessage($"Lỗi lưu bài từ {ip}: {ex.Message}", Color.Red); }
         }

@@ -284,23 +284,25 @@ namespace LabAdmin.Client
         {
             try
             {
+                LogClient("DEBUG: Đang xử lý lệnh thu bài...");
                 string sourceDir = @"D:\BaiLam";
-                string tempDir = @"D:\Temp";
-                string zipFilePath = Path.Combine(tempDir, "NopBai.zip");
+                if (!Directory.Exists(sourceDir))
+                {
+                    LogClient("LỖI: Không tìm thấy thư mục D:\\BaiLam trên máy trạm!");
+                    return;
+                }
+
+                string tempDir = Path.Combine(Path.GetTempPath(), "LabAdminTemp");
                 if (!Directory.Exists(tempDir)) Directory.CreateDirectory(tempDir);
+                string zipFilePath = Path.Combine(tempDir, "NopBai.zip");
                 if (File.Exists(zipFilePath)) File.Delete(zipFilePath);
-                if (Directory.Exists(sourceDir))
-                {
-                    ZipFile.CreateFromDirectory(sourceDir, zipFilePath);
-                    SendFrame(NetworkProtocol.TYPE_ZIP, File.ReadAllBytes(zipFilePath));
-                    LogClient("Đã nộp bài theo yêu cầu của giảng viên.");
-                }
-                else
-                {
-                    LogClient("Không tìm thấy thư mục bài làm: " + sourceDir);
-                }
+
+                ZipFile.CreateFromDirectory(sourceDir, zipFilePath);
+                SendFrame(NetworkProtocol.TYPE_ZIP, File.ReadAllBytes(zipFilePath));
+
+                LogClient("Đã nộp bài thành công.");
             }
-            catch (Exception ex) { Debug.WriteLine("HandlePull loi: " + ex.Message); }
+            catch (Exception ex) { LogClient("Lỗi thu bài: " + ex.Message); }
         }
 
         // =========================================================
